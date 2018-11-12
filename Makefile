@@ -61,6 +61,12 @@ python: .loxi_ts.python
 	./loxigen.py --install-dir=${LOXI_OUTPUT_DIR} --lang=python
 	touch $@
 
+go: .loxi_ts.go
+
+.loxi_ts.go: ${LOXI_PY_FILES} ${LOXI_TEMPLATE_FILES} ${INPUT_FILES} ${TEST_DATA}
+	./loxigen.py --install-dir=${LOXI_OUTPUT_DIR} --lang=go
+	touch $@
+
 python-doc: python
 	rm -rf ${LOXI_OUTPUT_DIR}/pyloxi-doc
 	mkdir -p ${LOXI_OUTPUT_DIR}/pyloxi-doc
