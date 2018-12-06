@@ -39,11 +39,13 @@
 
 package ${package}
 
-const (
+import "fmt"
+
 :: for i, enum in enumerate(sorted(enums, key=lambda enum: enum.name)):
 ::     if i != 0:
 
 ::     #endif
+const (
 	// Identifiers from group ${enum.name}
 ::     for (key, value) in enum.values:
 ::         ident = util.go_ident(key)
@@ -54,5 +56,33 @@ const (
 	${ident} = ${value} // ${key}
 ::         #endif
 ::     #endfor
-:: #endfor
 )
+::     if enum.params.get("wire_type", False):
+::         ident = util.go_ident(enum.name)
+
+type ${ident} ${enum.params["wire_type"][:-2]}
+
+func (self ${ident}) MarshalJSON() ([]byte, error) {
+::         if enum.is_bitmask:
+	var flags []string
+::             for (key, value) in enum.values:
+	if self & ${util.go_ident(key)} == ${util.go_ident(key)} {
+		flags = append(flags, "\"${util.go_ident(key)}\": true")
+	}
+::             #endfor
+	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
+::         else:
+	switch self {
+::             for (key, value) in enum.values:
+	case ${util.go_ident(key)}:
+		return []byte("\"${util.go_ident(key)}\""), nil
+::             #endfor
+::             if enum.params.get("complete", True):
+	default:
+		return nil, fmt.Errorf("Invalid value '%d' for ${ident}", self)
+::             #endif
+	}
+::         #endif
+}
+::     #endif
+:: #endfor

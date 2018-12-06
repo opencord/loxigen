@@ -44,33 +44,33 @@ OFTypeData = namedtuple("OFTypeData", ["name", "serialize", "unserialize"])
 type_data_map = {
     'char': OFTypeData(
         name='byte',
-        serialize=Template('encoder.PutChar($member)'),
-        unserialize=Template('$member = $decoder.ReadChar()')),
+        serialize=Template('encoder.PutChar(byte($member))'),
+        unserialize=Template('$member = $type($decoder.ReadChar())')),
 
     'uint8_t': OFTypeData(
         name='uint8',
-        serialize=Template('encoder.PutUint8($member)'),
-        unserialize=Template('$member = $decoder.ReadByte()')),
+        serialize=Template('encoder.PutUint8(uint8($member))'),
+        unserialize=Template('$member = $type($decoder.ReadByte())')),
 
     'uint16_t': OFTypeData(
         name='uint16',
-        serialize=Template('encoder.PutUint16($member)'),
-        unserialize=Template('$member = $decoder.ReadUint16()')),
+        serialize=Template('encoder.PutUint16(uint16($member))'),
+        unserialize=Template('$member = $type($decoder.ReadUint16())')),
 
     'uint32_t': OFTypeData(
         name='uint32',
-        serialize=Template('encoder.PutUint32($member)'),
-        unserialize=Template('$member = $decoder.ReadUint32()')),
+        serialize=Template('encoder.PutUint32(uint32($member))'),
+        unserialize=Template('$member = $type($decoder.ReadUint32())')),
 
     'uint64_t': OFTypeData(
         name='uint64',
-        serialize=Template('encoder.PutUint64($member)'),
-        unserialize=Template('$member = $decoder.ReadUint64()')),
+        serialize=Template('encoder.PutUint64(uint64($member))'),
+        unserialize=Template('$member = $type($decoder.ReadUint64())')),
 
     'uint128_t': OFTypeData(
         name='uint128',
-        serialize=Template('encoder.PutUint128($member)'),
-        unserialize=Template('$member = $decoder.ReadUint128()')),
+        serialize=Template('encoder.PutUint128(uint128($member))'),
+        unserialize=Template('$member = $type($decoder.ReadUint128())')),
 
     'of_port_no_t': OFTypeData(
         name='PortNo',
@@ -214,7 +214,17 @@ def oftype_get_class(oftype, version):
     oftype = oftype[:-2]
     return loxi_globals.ir[version].class_by_name(oftype)
 
+def get_go_enum(oftype, version):
+    enums = loxi_globals.ir[version].enums
+    enum = find(lambda e: e.name == oftype, enums)
+    if enum != None:
+        return util.go_ident(oftype)
+
 def get_go_type(oftype, version):
+    enum = get_go_enum(oftype, version)
+    if enum:
+        return util.go_ident(oftype)
+
     gotype = lookup_type_data(oftype, version)
     if not gotype and loxi_utils.oftype_is_list(oftype):
         item_type = loxi_utils.oftype_list_elem(oftype)

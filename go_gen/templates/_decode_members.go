@@ -28,6 +28,7 @@
 ::
 :: from loxi_ir import *
 :: import go_gen.oftype
+:: import go_gen.util as util
 :: import loxi_utils.loxi_utils as loxi_utils
 ::
 :: field_length_members = {}
@@ -49,7 +50,11 @@
 ::         #endif
 ::
 ::         if oftype:
-	${oftype.unserialize.substitute(member=member_name, decoder=decoder_expr)}
+::             _type = oftype.name
+::             if go_gen.oftype.get_go_enum(member.oftype, version):
+::                 _type = util.go_ident(member.oftype)
+::             #endif
+	${oftype.unserialize.substitute(member=member_name, type=_type, decoder=decoder_expr)}
 ::             klass = go_gen.oftype.oftype_get_class(member.oftype, version)
 ::             if klass and hasattr(klass, "params") and klass.params.get("align", 0):
 	decoder.SkipAlign()
