@@ -60,7 +60,7 @@ def oftype_unherited_members(ofclass):
             continue
         if hasattr(member, "oftype") and member.oftype == "of_octets_t" and ofclass.discriminator and i == len(ofclass.members) - 1:
             continue
-        if type(member) == loxi_ir.OFPadMember and i == len(ofclass.members) - 1:
+        if type(member) == loxi_ir.OFPadMember and i == len(ofclass.members) - 1 and ofclass.virtual:
             continue
         unherited.append(member)
     return unherited
