@@ -27,6 +27,15 @@
 
 #version any
 
+enum nx_flow_monitor_flags(wire_type=uint16_t, bitmask=True) {
+    NXFMF_INITIAL = 0x1,
+    NXFMF_ADD = 0x2,
+    NXFMF_DELETE = 0x4,
+    NXFMF_MODIFY = 0x8,
+    NXFMF_ACTIONS = 0x10,
+    NXFMF_OWN = 0x20,
+};
+
 struct of_nicira_match(align=8, length_includes_align=False) {
     list(of_oxm_t) nxm_entries;
 };
@@ -50,6 +59,22 @@ struct of_action_nicira : of_action_experimenter {
     pad(6);
 };
 
+struct of_nicira_flow_stats_request : of_experimenter_stats_request {
+    uint8_t version;
+    uint8_t type == 16;
+    uint16_t length;
+    uint32_t xid;
+    uint16_t stats_type == 0xffff;
+    enum ofp_stats_reply_flags flags;
+    uint32_t experimenter == 0x2320;
+    uint32_t subtype == 0;
+    pad(4); // ???
+    of_port_no_t out_port;
+    uint16_t match_len;
+    uint8_t table_id;
+    pad(3);
+};
+
 struct of_nicira_flow_monitor_request : of_experimenter_stats_request {
     uint8_t version;
     uint8_t type == 16;
@@ -61,7 +86,7 @@ struct of_nicira_flow_monitor_request : of_experimenter_stats_request {
     uint32_t subtype == 0;
     pad(4); // ???
     uint32_t monitor_id;
-    uint16_t monitor_flags;
+    enum nx_flow_monitor_flags monitor_flags;
     of_port_no_t out_port;
     uint16_t match_len;
     uint8_t table_id;
@@ -70,6 +95,49 @@ struct of_nicira_flow_monitor_request : of_experimenter_stats_request {
 };
 
 struct of_nicira_stats_reply : of_experimenter_stats_reply {
+    uint8_t version;
+    uint8_t type == 17;
+    uint16_t length;
+    uint32_t xid;
+    uint16_t stats_type == 0xffff;
+    enum ofp_stats_reply_flags flags;
+    uint32_t experimenter == 0x2320;
+    uint32_t subtype == ?;
+};
+
+struct of_nicira_flow_stats_reply : of_nicira_stats_reply {
+    uint8_t version;
+    uint8_t type == 17;
+    uint16_t length;
+    uint32_t xid;
+    uint16_t stats_type == 0xffff;
+    enum ofp_stats_reply_flags flags;
+    uint32_t experimenter == 0x2320;
+    uint32_t subtype == 0;
+    pad(4);
+    list(of_nicira_flow_stats_t) stats;
+};
+
+struct of_nicira_flow_stats {
+    uint16_t length;
+    uint8_t table_id;
+    pad(1);
+    uint32_t duration_sec;
+    uint32_t duration_nsec;
+    uint16_t priority;
+    uint16_t idle_timeout;
+    uint16_t hard_timeout;
+    uint16_t match_len == length(match);
+    uint16_t idle_age;
+    uint16_t hard_age;
+    uint64_t cookie;
+    uint64_t packet_count;
+    uint64_t byte_count;
+    of_nicira_match_t match;
+    list(of_action_t) actions;
+};
+
+struct of_nicira_flow_monitor_reply : of_nicira_stats_reply {
     uint8_t version;
     uint8_t type == 17;
     uint16_t length;
@@ -130,15 +198,6 @@ struct of_nicira_flow_update_full_modified : of_nicira_flow_update_event {
     uint64_t cookie;
     of_nicira_match_t match;
     list(of_action_t) actions;
-};
-
-enum nx_flow_monitor_flags(wire_type=uint16_t) {
-    NXFMF_INITIAL = 0x1,
-    NXFMF_ADD = 0x2,
-    NXFMF_DELETE = 0x4,
-    NXFMF_MODIFY = 0x8,
-    NXFMF_ACTIONS = 0x10,
-    NXFMF_OWN = 0x20,
 };
 
 struct of_action_resubmit : of_action_nicira {
