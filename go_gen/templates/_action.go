@@ -25,7 +25,25 @@
 :: # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 :: # EPL for the specific language governing permissions and limitations
 :: # under the EPL.
+::
+:: from loxi_ir import *
+:: import go_gen.oftype
+::
 
-func (self *${ofclass.goname}) GetType() string {
-	return "${ofclass.name[3:]}"
+func (self *${ofclass.goname}) GetName() string {
+	return "${ofclass.name[10:]}"
+}
+
+func (self *${ofclass.goname}) GetFields() map[string]interface{} {
+	return map[string]interface{}{
+:: for member in ofclass.unherited_members:
+::     if type(member) != OFPadMember:
+::         oftype = go_gen.oftype.get_go_type(member.oftype, version)
+::         if not oftype:
+::             raise Exception("Could not determine type for %s in %s" % (member.name, ofclass.name))
+::         #endif
+		"${member.goname}": self.${member.goname},
+::     #endif
+:: #endfor
+	}
 }

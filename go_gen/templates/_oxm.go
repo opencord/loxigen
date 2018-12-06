@@ -30,6 +30,6 @@ func (self *${ofclass.goname}) GetValue() interface{} {
 	return self.Value
 }
 
-func (self *${ofclass.goname}) GetType() string {
+func (self *${ofclass.goname}) GetName() string {
 	return "${ofclass.name[3:]}"
 }

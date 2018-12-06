@@ -68,8 +68,11 @@ type I${ofclass.goname} interface {
 :: #endfor
 ::
 :: if ofclass.name == "of_oxm":
+	GetName() string
 	GetValue() interface{}
-	GetType() string
+:: elif ofclass.name == "of_action":
+	GetName()   string
+	GetFields() map[string]interface{}
 :: #endif
 }
 ::
