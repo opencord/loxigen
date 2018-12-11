@@ -98,7 +98,7 @@ type ${goname} = ${gotype}
 :: #endfor
 
 func DecodeMessage(data []byte) (goloxi.Message, error) {
-	header, err := decodeHeader(goloxi.NewDecoder(data))
+	header, err := DecodeHeader(goloxi.NewDecoder(data))
 	if err != nil {
 		return nil, err
 	}

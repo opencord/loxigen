@@ -40,7 +40,7 @@
 		item := &${elem_type}{}
 		if err := item.Decode(decoder); err != nil {
 :: else:
-		item, err := decode${elem_type}(decoder)
+		item, err := Decode${elem_type}(decoder)
 		if err != nil {
 :: #endif
 ::

@@ -73,6 +73,12 @@ self.Type = ${type_member.value}
 ::     #endif
 :: #endfor
 ::
+:: if ofclass.has_external_alignment:
+
+	encoder.SkipAlign()
+
+:: #endif
+::
 :: length_member = ofclass.length_member
 :: if length_member and not ofclass.virtual:
 

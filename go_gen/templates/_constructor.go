@@ -33,19 +33,12 @@
 
 :: param = ""
 :: if ofclass.discriminator:
-::     param = "_" + ofclass.discriminator.name + " "
-::     if ofclass.discriminator.oftype.startswith("of_"):
-::         param += util.go_ident(ofclass.discriminator.oftype[:-2])
-::     else:
-::         param += ofclass.discriminator.oftype[:-2]
-::     #endif
+::     param = "_" + ofclass.discriminator.name
+::     param += " " + go_gen.oftype.get_go_type(ofclass.discriminator.oftype, version)
 :: #endif
 ::
 func New${ofclass.goname}(${param}) *${ofclass.goname} {
-	return &${ofclass.goname}{
-:: if ofclass.discriminator:
-	${ofclass.discriminator.goname}: _${ofclass.discriminator.name},
-:: #endif
+	obj := &${ofclass.goname}{
 :: if ofclass.superclass:
 ::     member = ""
 ::     if ofclass.superclass.discriminator:
@@ -54,4 +47,8 @@ func New${ofclass.goname}(${param}) *${ofclass.goname} {
 ::     #endif
 :: #endif
 	}
+:: if ofclass.discriminator:
+	obj.${ofclass.discriminator.goname} = _${ofclass.discriminator.name}
+:: #endif
+	return obj
 }

@@ -118,9 +118,9 @@ type_data_map = {
         unserialize=Template('$member.Decode($decoder)')),
 
     'of_oxm_t': OFTypeData(
-        name='OXM',
+        name='IOxm',
         serialize=Template('$member.Serialize(encoder)'),
-        unserialize=Template('$member.Decode($decoder)')),
+        unserialize=Template('oxm, err := DecodeOxm($decoder)\n if err != nil {\nreturn nil, err\n}\n$member = oxm')),
 
     'of_checksum_128_t': OFTypeData(
         name='Checksum128',
@@ -148,9 +148,9 @@ type_data_map = {
         unserialize=Template('$member.Decode($decoder)')),
 
     'of_header_t': OFTypeData(
-        name='Header',
+        name='IHeader',
         serialize=Template('$member.Serialize(encoder)'),
-        unserialize=Template('$member.Decode($decoder)')),
+        unserialize=Template('header, err := DecodeHeader($decoder)\n if err != nil {\nreturn nil, err\n}\n$member = header')),
 }
 
 ## Fixed length strings

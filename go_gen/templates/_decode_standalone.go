@@ -33,7 +33,7 @@
 :: import loxi_globals
 :: import loxi_utils.loxi_utils as loxi_utils
 ::
-:: var_name = ofclass.goname.lower()
+:: var_name = "_" + ofclass.goname.lower()
 :: if ofclass.virtual:
 ::     return_type = "I" + ofclass.goname
 :: else:
@@ -41,10 +41,10 @@
 :: #endif
 :: if ofclass.superclass:
 ::     superclass = util.go_ident(ofclass.superclass.name)
-func decode${ofclass.goname}(parent *${superclass}, decoder *goloxi.Decoder) (${return_type}, error) {
+func Decode${ofclass.goname}(parent *${superclass}, decoder *goloxi.Decoder) (${return_type}, error) {
 	${var_name} := &${ofclass.goname}{${superclass}: parent}
 :: else:
-func decode${ofclass.goname}(decoder *goloxi.Decoder) (${return_type}, error) {
+func Decode${ofclass.goname}(decoder *goloxi.Decoder) (${return_type}, error) {
 	${var_name} := &${ofclass.goname}{}
 :: #endif
 :: if base_length:
