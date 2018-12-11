@@ -31,5 +31,5 @@ func (self *${ofclass.goname}) GetValue() interface{} {
 }
 
 func (self *${ofclass.goname}) GetName() string {
-	return "${ofclass.name[3:]}"
+	return "${ofclass.name[7:]}"
 }
