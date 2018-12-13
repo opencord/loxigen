@@ -296,12 +296,56 @@ struct of_action_nx_nat : of_action_nicira {
     uint16_t range_present;
 };
 
+enum nx_action_controller2_prop_type(wire_type=uint16_t) {
+    NXAC2PT_MAX_LEN = 0,
+    NXAC2PT_CONTROLLER_ID = 1,
+    NXAC2PT_REASON = 2,
+    NXAC2PT_USERDATA = 3,
+    NXAC2PT_PAUSE = 4,
+    NXAC2PT_METER_ID = 5,
+};
+
+struct of_action_nx_controller2_property {
+    enum nx_action_controller2_prop_type type == ?;
+};
+
+struct of_action_nx_controller2_property_max_len(align=8, length_includes_align=False) : of_action_nx_controller2_property {
+    enum nx_action_controller2_prop_type type == 0;
+    uint16_t max_len;
+};
+
+struct of_action_nx_controller2_property_controller_id(align=8, length_includes_align=False) : of_action_nx_controller2_property {
+    enum nx_action_controller2_prop_type type == 1;
+    uint16_t controller_id;
+};
+
+struct of_action_nx_controller2_property_reason(align=8, length_includes_align=False) : of_action_nx_controller2_property {
+    enum nx_action_controller2_prop_type type == 2;
+    enum ofp_packet_in_reason reason;
+};
+
+struct of_action_nx_controller2_property_userdata(align=8, length_includes_align=False) : of_action_nx_controller2_property {
+    enum nx_action_controller2_prop_type type == 3;
+    uint16_t length;
+    of_octets_t userdata;
+};
+
+struct of_action_nx_controller2_property_pause(align=8, length_includes_align=False) : of_action_nx_controller2_property {
+    enum nx_action_controller2_prop_type type == 4;
+};
+
+struct of_action_nx_controller2_property_meter_id(align=8, length_includes_align=False) : of_action_nx_controller2_property {
+    enum nx_action_controller2_prop_type type == 5;
+    uint32_t meter_id;
+};
+
 struct of_action_nx_controller2 : of_action_nicira {
     uint16_t type == 65535;
     uint16_t len;
     uint32_t experimenter == 0x2320;
     uint16_t subtype == 37;
     pad(6);
+    list(of_action_nx_controller2_property_t) properties;
 };
 
 struct of_action_nx_sample2 : of_action_nicira {
