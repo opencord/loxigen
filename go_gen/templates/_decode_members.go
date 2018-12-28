@@ -31,6 +31,11 @@
 :: import go_gen.util as util
 :: import loxi_utils.loxi_utils as loxi_utils
 ::
+::
+:: if ofclass.has_external_alignment:
+	defer decoder.SkipAlign()
+
+:: #endif
 :: field_length_members = {}
 :: for member in members:
 ::     decoder_expr = 'decoder'
@@ -65,11 +70,9 @@
 ::             raise Exception("Unhandled member: %s" % (str(member)))
 ::         #endif
 ::
-::         if type(member) == OFTypeMember:
-	// if ${member_name} != ${member.value} {
-	// 	return fmt.Errorf("Wrong value '%d' for type, expected '${member.value}'.", ${member_name})
-	// }
-::         elif type(member) == OFLengthMember:
+::         if type(member) == OFLengthMember:
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(${member_name}), ${member.length} + ${member.offset})
 ::         elif type(member) == OFFieldLengthMember:
 ::             field_length_members[member.field_name] = member
@@ -78,9 +81,3 @@
 ::     #endif
 ::
 :: #endfor
-::
-:: if ofclass.has_external_alignment:
-
-	decoder.SkipAlign()
-
-:: #endif
