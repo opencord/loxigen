@@ -97,7 +97,7 @@ def build_ofclasses(version):
                     discriminator_values[m.value] = ofclass
             
                 if type(m) == loxi_ir.OFFieldLengthMember:
-                    ofclass.field_lengths[m.name] = m.field_name
+                    ofclass.field_lengths[m.field_name] = m
 
         ofclass.embedded_struct = (ofclass.name + "_t" in oftype.embedded_structs) or \
                                   (ofclass.name[:-2] + "t" in oftype.embedded_structs)

@@ -46,9 +46,14 @@
 ::         member_name = self_name + "." + member.goname
 ::         oftype = go_gen.oftype.lookup_type_data(member.oftype, version)
 ::
-::         if type(member) == OFDataMember or type(member) == OFDiscriminatorMember:
-::             if member.name in field_length_members:
-::                 decoder_expr = 'decoder.SliceDecoder(int(%s.%s), 0)' % (self_name, field_length_members[member.name].goname)
+::         if type(member) in [OFDataMember, OFDiscriminatorMember]:
+::             if member.name in ofclass.field_lengths:
+::                 field_length = ofclass.field_lengths[member.name]
+::                 if 'bits' in field_length.name:
+::                     decoder_expr = 'decoder.SliceDecoder(int((%s.%s+15)/16*2), 0)' % (self_name, ofclass.field_lengths[member.name].goname)
+::                 else:
+::                     decoder_expr = 'decoder.SliceDecoder(int(%s.%s), 0)' % (self_name, ofclass.field_lengths[member.name].goname)
+::                 #endif
 ::             else:
 ::                 decoder_expr = 'decoder'
 ::             #endif
@@ -74,8 +79,6 @@
 	oldDecoder := decoder
 	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(${member_name}), ${member.length} + ${member.offset})
-::         elif type(member) == OFFieldLengthMember:
-::             field_length_members[member.field_name] = member
 ::         #endif
 ::
 ::     #endif

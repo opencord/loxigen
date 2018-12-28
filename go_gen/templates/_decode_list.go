@@ -35,7 +35,11 @@
 :: elem_length = member_ofclass.base_length
 :: elem_type = util.go_ident(loxi_utils.oftype_list_elem(member.oftype))
 
+:: if member.name in ofclass.field_lengths:
+	for i := 0; i < int(${self_name}.${ofclass.field_lengths[member.name].goname}); i++ {
+:: else:
 	for decoder.Length() >= ${elem_length} {
+:: #endif
 :: if member_ofclass.embedded_struct:
 		item := &${elem_type}{}
 		if err := item.Decode(decoder); err != nil {
@@ -50,5 +54,7 @@
 			return nil, err
 :: #endif
 		}
-		${self_name}.${member.goname} = append(${self_name}.${member.goname}, item)
+		if item != nil {
+			${self_name}.${member.goname} = append(${self_name}.${member.goname}, item)
+		}
 	}
