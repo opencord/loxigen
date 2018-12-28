@@ -166,6 +166,9 @@ def calc_lengths(version, fe_class, existing_classes, existing_enums):
         if isinstance(member, fe.OFPadMember):
             member_base_length = member.length
             member_fixed_length = True
+        elif isinstance(member, fe.OFOptionalDataMember):
+            member_base_length = 0
+            member_fixed_length = False
         else:
             m_type = member.oftype
             name = member.name

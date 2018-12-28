@@ -53,6 +53,8 @@ def create_member(m_ast, ctx):
             return ir.OFLengthMember(name=m_ast[2], oftype=get_type(m_ast[1], ctx))
         elif m_ast[2] == 'version': # Should be moved to parser
             return ir.OFVersionMember(name=m_ast[2], oftype=get_type(m_ast[1], ctx))
+        elif len(m_ast) > 3:
+            return ir.OFOptionalDataMember(name=m_ast[2], oftype=get_type(m_ast[1], ctx), condition=(m_ast[3],m_ast[4]))
         else:
             return ir.OFDataMember(name=m_ast[2], oftype=get_type(m_ast[1], ctx))
     elif m_ast[0] == 'discriminator':

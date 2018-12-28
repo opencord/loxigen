@@ -46,7 +46,7 @@
 ::         member_name = self_name + "." + member.goname
 ::         oftype = go_gen.oftype.lookup_type_data(member.oftype, version)
 ::
-::         if type(member) in [OFDataMember, OFDiscriminatorMember]:
+::         if type(member) in [OFDataMember, OFOptionalDataMember, OFDiscriminatorMember]:
 ::             if member.name in ofclass.field_lengths:
 ::                 field_length = ofclass.field_lengths[member.name]
 ::                 if 'bits' in field_length.name:
@@ -60,6 +60,10 @@
 ::         #endif
 ::
 ::         if oftype:
+::             if type(member) == OFOptionalDataMember:
+	if ${self_name}.${util.go_ident(member.condition[0])} & ${member.condition[1]} == ${member.condition[1]} {
+::             #endif
+::
 ::             _type = oftype.name
 ::             if go_gen.oftype.get_go_enum(member.oftype, version):
 ::                 _type = util.go_ident(member.oftype)
@@ -68,6 +72,9 @@
 ::             klass = go_gen.oftype.oftype_get_class(member.oftype, version)
 ::             if klass and hasattr(klass, "params") and klass.params.get("align", 0):
 	decoder.SkipAlign()
+::             #endif
+::             if type(member) == OFOptionalDataMember:
+	}
 ::             #endif
 ::         elif loxi_utils.oftype_is_list(member.oftype):
 ::             include('_decode_list.go', version=version, member=member, self_name=self_name)

@@ -33,6 +33,7 @@ __all__ = [
     'OFInput',
     'OFClass',
     'OFDataMember',
+    'OFOptionalDataMember',
     'OFTypeMember',
     'OFDiscriminatorMember',
     'OFLengthMember',
@@ -76,6 +77,16 @@ Normal field
 Example: packet_in.buffer_id
 """
 OFDataMember = namedtuple('OFDataMember', ['name', 'oftype'])
+
+"""
+Optional field
+
+@param name
+@param oftype C-like type string
+
+Example: of_action_nx_nat.ipv4_min
+"""
+OFOptionalDataMember = namedtuple('OFOptionalDataMember', ['name', 'oftype', 'condition'])
 
 """
 Field that declares that this is an abstract super-class and

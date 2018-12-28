@@ -286,6 +286,16 @@ struct of_action_nx_ct : of_action_nicira {
     uint8_t recirc_table;
     pad(3);
     uint16_t alg;
+    list(of_action_t) actions;
+};
+
+enum of_nx_nat_range(wire_type=uint16_t, bitmask=True, complete=True) {
+    NX_NAT_RANGE_IPV4_MIN  = 1,
+    NX_NAT_RANGE_IPV4_MAX  = 2,
+    NX_NAT_RANGE_IPV6_MIN  = 4,
+    NX_NAT_RANGE_IPV6_MAX  = 8,
+    NX_NAT_RANGE_PROTO_MIN = 16,
+    NX_NAT_RANGE_PROTO_MAX = 32,
 };
 
 struct of_action_nx_nat : of_action_nicira {
@@ -295,7 +305,13 @@ struct of_action_nx_nat : of_action_nicira {
     uint16_t subtype == 36;
     pad(2);
     uint16_t flags;
-    uint16_t range_present;
+    enum of_nx_nat_range range_present;
+    of_ipv4_t ipv4_min if range_present & 1;
+    of_ipv4_t ipv4_max if range_present & 2;
+    of_ipv6_t ipv6_min if range_present & 4;
+    of_ipv6_t ipv6_max if range_present & 8;
+    uint32_t proto_min if range_present & 16;
+    uint32_t proto_max if range_present & 32;
 };
 
 enum nx_action_controller2_prop_type(wire_type=uint16_t) {

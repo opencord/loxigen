@@ -45,6 +45,7 @@ __all__ = [
     'OFClass',
     'OFUnifiedClass',
     'OFDataMember',
+    'OFOptionalDataMember',
     'OFTypeMember',
     'OFDiscriminatorMember',
     'OFLengthMember',
@@ -249,6 +250,17 @@ Normal field
 Example: packet_in.buffer_id
 """
 class OFDataMember(namedtuple('OFDataMember', ['name', 'oftype', 'is_fixed_length', 'base_length', 'offset']), MemberMixin):
+    pass
+
+"""
+Optional field
+
+@param name
+@param oftype C-like type string
+
+Example: of_action_nx_nat.ipv4_min
+"""
+class OFOptionalDataMember(namedtuple('OFOptionalDataMember', ['name', 'oftype', 'is_fixed_length', 'base_length', 'offset', 'condition']), MemberMixin):
     pass
 
 """
@@ -459,7 +471,7 @@ def build_protocol(version, ofinputs):
 
         ofc_members = []
         for m in orig_fe.members:
-            if not isinstance(m, frontend_ir.OFDataMember) and not isinstance(m, frontend_ir.OFPadMember):
+            if not isinstance(m, frontend_ir.OFDataMember) and not isinstance(m, frontend_ir.OFOptionalDataMember) and not isinstance(m, frontend_ir.OFPadMember):
                 ofc_members.append(m)
 
         fe = frontend_ir.OFClass(

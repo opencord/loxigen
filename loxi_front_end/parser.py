@@ -56,7 +56,7 @@ discriminator_member = P.Group(tag('discriminator') + any_type + identifier + s(
 field_length_member = P.Group(tag('field_length') + any_type + identifier + \
     s('==') + s('length') + s('(') + identifier + s(')'))
 type_member = P.Group(tag('type') + any_type + identifier + s('==') + integer)
-data_member = P.Group(tag('data') + any_type - identifier)
+data_member = P.Group(tag('data') + any_type - identifier + P.Optional(s('if') - identifier + s('&') + integer))
 
 struct_param_name = kw("align") | kw("length_includes_align")
 struct_param = P.Group(struct_param_name - s('=') - word)
