@@ -27,6 +27,11 @@
 
 #version any
 
+enum of_action_nx_bundle_slave_type(wire_type=uint32_t, complete=True) {
+    NXM_OF_IN_PORT = 2,
+    NXM_OF_JUST_THERE_TO_DEFINE_PREFIX = 10000,
+};
+
 struct of_action_nx_resubmit : of_action_nicira {
     uint16_t type == 65535;
     uint16_t len;
@@ -93,10 +98,10 @@ struct of_action_nx_multipath : of_action_nicira {
     uint16_t len;
     uint32_t experimenter == 0x2320;
     uint16_t subtype == 10;
-    uint16_t fields;
+    enum nx_hash_fields fields;
     uint16_t basis;
     pad(2);
-    uint16_t algorithm;
+    enum nx_mp_algorithm algorithm;
     uint16_t max_link;
     uint32_t arg;
     pad(2);
@@ -110,9 +115,9 @@ struct of_action_nx_bundle : of_action_nicira {
     uint32_t experimenter == 0x2320;
     uint16_t subtype == 12;
     uint16_t algorithm;
-    uint16_t fields;
+    enum nx_hash_fields fields;
     uint16_t basis;
-    uint32_t slave_type;
+    enum of_action_nx_bundle_slave_type slave_type;
     uint16_t n_slaves;
     uint16_t ofs_nbits;
     of_oxm_id_t dst;
@@ -124,14 +129,34 @@ struct of_action_nx_bundle_load : of_action_nicira {
     uint16_t len;
     uint32_t experimenter == 0x2320;
     uint16_t subtype == 13;
-    uint16_t algorithm;
-    uint16_t fields;
+    enum nx_bd_algorithms algorithm;
+    enum nx_hash_fields fields;
     uint16_t basis;
-    uint32_t slave_type;
+    enum of_action_nx_bundle_slave_type slave_type == ?;
     uint16_t n_slaves;
     uint16_t ofs_nbits;
-    uint32_t dst;
+    of_oxm_id_t dst;
     pad(4);
+};
+
+struct of_action_nx_bundle_load_in_port : of_action_nicira {
+    uint16_t type == 65535;
+    uint16_t len;
+    uint32_t experimenter == 0x2320;
+    uint16_t subtype == 13;
+    enum nx_bd_algorithms algorithm;
+    enum nx_hash_fields fields;
+    uint16_t basis;
+    enum of_action_nx_bundle_slave_type slave_type == 2;
+    uint16_t n_slaves == length(in_ports);
+    uint16_t ofs_nbits;
+    of_oxm_id_t dst;
+    pad(4);
+    list(of_action_nx_bundle_load_slave_t) in_ports;
+};
+
+struct of_action_nx_bundle_load_slave {
+    enum ofp_port port;
 };
 
 struct of_action_nx_resubmit_table : of_action_nicira {
@@ -169,6 +194,7 @@ struct of_action_nx_learn : of_action_nicira {
     pad(1);
     uint16_t fin_idle_timeout;
     uint16_t fin_hard_timeout;
+    list(of_flow_mod_spec_t) flow_mods;
 };
 
 struct of_action_nx_exit : of_action_nicira {
@@ -218,13 +244,14 @@ struct of_action_nx_write_metadata : of_action_nicira {
     uint64_t mask;
 };
 
-struct of_action_nx_stack_push : of_action_nicira {
+struct of_action_nx_stack_push(align=24) : of_action_nicira {
     uint16_t type == 65535;
     uint16_t len;
     uint32_t experimenter == 0x2320;
     uint16_t subtype == 27;
     uint16_t offset;
-    pad(12);
+    of_oxm_id_t field;
+    uint16_t n_bits;
 };
 
 struct of_action_nx_stack_pop : of_action_nicira {
@@ -233,7 +260,8 @@ struct of_action_nx_stack_pop : of_action_nicira {
     uint32_t experimenter == 0x2320;
     uint16_t subtype == 28;
     uint16_t offset;
-    pad(12);
+    of_oxm_id_t field;
+    uint16_t n_bits;
 };
 
 struct of_action_nx_sample : of_action_nicira {
@@ -275,13 +303,18 @@ struct of_action_nx_conjunction : of_action_nicira {
     uint32_t id;
 };
 
+enum nx_conntrack_flags(wire_type=uint16_t, bitmask=True, complete=True) {
+    NX_CT_F_COMMIT = 1,
+    NX_CT_F_FORCE  = 2,
+};
+
 struct of_action_nx_ct : of_action_nicira {
     uint16_t type == 65535;
     uint16_t len;
     uint32_t experimenter == 0x2320;
     uint16_t subtype == 35;
-    uint16_t flags;
-    uint32_t zone_src;
+    enum nx_conntrack_flags flags;
+    of_oxm_id_t zone_src;
     uint16_t value;
     uint8_t recirc_table;
     pad(3);
@@ -536,4 +569,51 @@ struct of_action_nx_debug_slow : of_action_nicira {
     uint16_t len;
     uint32_t experimenter == 0x2320;
     uint16_t subtype == 254;
+};
+
+struct of_flow_mod_spec {
+    uint8_t src_dst == ?;
+    // This is very hacky: we only support 8 of the 10 bits of n_bits
+    uint8_t n_bits;
+};
+
+struct of_flow_mod_spec_src0_dst0 : of_flow_mod_spec {
+    uint8_t src_dst == 0;
+    uint8_t n_bits == ?;
+    of_oxm_id_t src;
+    uint16_t src_ofs;
+    of_oxm_id_t dst;
+    uint16_t dst_ofs;
+};
+
+struct of_flow_mod_spec_src0_dst1 : of_flow_mod_spec {
+    uint8_t src_dst == 8;
+    uint8_t n_bits;
+    of_oxm_id_t src;
+    uint16_t src_ofs;
+    of_oxm_id_t dst;
+    uint16_t dst_ofs;
+};
+
+struct of_flow_mod_spec_src1_dst0 : of_flow_mod_spec {
+    uint8_t src_dst == 32;
+    uint8_t n_bits == length(src);
+    of_octets_t src;
+    of_oxm_id_t dst;
+    uint16_t dst_ofs;
+};
+
+struct of_flow_mod_spec_src1_dst1 : of_flow_mod_spec {
+    uint8_t src_dst == 40;
+    uint8_t n_bits == length(src);
+    of_octets_t src;
+    of_oxm_id_t dst;
+    uint16_t dst_ofs;
+};
+
+struct of_flow_mod_spec_src0_dst2 : of_flow_mod_spec {
+    uint8_t src_dst == 16;
+    uint8_t n_bits;
+    of_oxm_id_t src;
+    uint16_t src_ofs;
 };

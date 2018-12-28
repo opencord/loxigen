@@ -58,6 +58,12 @@ func Decode${ofclass.goname}(decoder *goloxi.Decoder) (${return_type}, error) {
 ::                               self_name=var_name)
 ::
 :: discriminator = ofclass.discriminator
+:: if ofclass.name == "of_flow_mod_spec":
+	if ${var_name}.SrcDst == 0 && ${var_name}.NBits == 0 {
+		return nil, nil
+	}
+:: #endif
+::
 :: if discriminator and hasattr(discriminator, "values"):
 ::     include('_decode_subclasses.go', discriminator=discriminator,
 ::                                      var_name=var_name)

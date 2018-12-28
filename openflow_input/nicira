@@ -36,6 +36,28 @@ enum nx_flow_monitor_flags(wire_type=uint16_t, bitmask=True) {
     NXFMF_OWN = 0x20,
 };
 
+enum nx_bd_algorithms(wire_type=uint16_t, complete=True) {
+    NX_BD_ALG_ACTIVE_BACKUP = 0,
+    NX_BD_ALG_HRW = 1,
+};
+
+enum nx_hash_fields(wire_type=uint16_t, complete=True) {
+    NX_HASH_FIELDS_ETH_SRC = 0,
+    NX_HASH_FIELDS_SYMMETRIC_L4 = 1,
+    NX_HASH_FIELDS_SYMMETRIC_L3L4 = 2,
+    NX_HASH_FIELDS_SYMMETRIC_L3L4_UDP = 3,
+    NX_HASH_FIELDS_NW_SRC = 4,
+    NX_HASH_FIELDS_NW_DST = 5,
+    NX_HASH_FIELDS_SYMMETRIC_L3 = 6,
+};
+
+enum nx_mp_algorithm(wire_type=uint16_t, complete=True) {
+    NX_MP_ALG_MODULO_N = 0,
+    NX_MP_ALG_HASH_THRESHOLD = 1,
+    NX_MP_ALG_HRW = 2,
+    NX_MP_ALG_ITER_HASH = 3,
+};
+
 struct of_nicira_match(align=8, length_includes_align=False) {
     list(of_oxm_t) nxm_entries;
 };
