@@ -33,10 +33,14 @@ from generic_utils import find
 import loxi_utils.loxi_utils as loxi_utils
 import loxi_globals
 import loxi_ir
+import loxi_ir.ir as ir
 import loxi_ir.ir_offset as ir_offset
 import util
 
 OFTypeData = namedtuple("OFTypeData", ["name", "serialize", "unserialize"])
+
+def decodeClass(klass):
+    return "if obj, err := Decode%s($decoder); err != nil {\nreturn nil, err\n} else {\n$member = obj\n}\n" % (klass,)
 
 # Map from LOXI type name to an object with templates for serialize, and unserialize
 # Most types are defined using the convenience code below. This dict should
@@ -118,9 +122,9 @@ type_data_map = {
         unserialize=Template('$member.Decode($decoder)')),
 
     'of_oxm_t': OFTypeData(
-        name='IOxm',
+        name='goloxi.IOxm',
         serialize=Template('$member.Serialize(encoder)'),
-        unserialize=Template('oxm, err := DecodeOxm($decoder)\n if err != nil {\nreturn nil, err\n}\n$member = oxm')),
+        unserialize=Template(decodeClass("Oxm"))),
 
     'of_checksum_128_t': OFTypeData(
         name='Checksum128',
@@ -133,24 +137,24 @@ type_data_map = {
         unserialize=Template('$member.Decode($decoder)')),
 
     'of_time_t': OFTypeData(
-        name='Time',
+        name='*Time',
         serialize=Template('$member.Serialize(encoder)'),
-        unserialize=Template('$member.Decode($decoder)')),
+        unserialize=Template(decodeClass("Time"))),
 
     'of_controller_uri_t': OFTypeData(
-        name='ControllerURI',
+        name='*ControllerURI',
         serialize=Template('$member.Serialize(encoder)'),
         unserialize=Template('$member.Decode($decoder)')),
 
     'of_controller_status_entry_t': OFTypeData(
-        name='ControllerStatusEntry',
+        name='*ControllerStatusEntry',
         serialize=Template('$member.Serialize(encoder)'),
-        unserialize=Template('$member.Decode($decoder)')),
+        unserialize=Template(decodeClass('ControllerStatusEntry'))),
 
     'of_header_t': OFTypeData(
         name='IHeader',
         serialize=Template('$member.Serialize(encoder)'),
-        unserialize=Template('header, err := DecodeHeader($decoder)\n if err != nil {\nreturn nil, err\n}\n$member = header')),
+        unserialize=Template(decodeClass('Header'))),
 }
 
 ## Fixed length strings
@@ -220,6 +224,13 @@ def get_go_enum(oftype, version):
     if enum != None:
         return util.go_ident(oftype)
 
+def get_go_interface(ofclass, version):
+    if ofclass.name == "of_oxm":
+        return "goloxi.IOxm"
+    elif ofclass.name == "of_action":
+        return "goloxi.IAction"
+    return "I" + util.go_ident(ofclass.name)
+
 def get_go_type(oftype, version):
     enum = get_go_enum(oftype, version)
     if enum:
@@ -230,9 +241,12 @@ def get_go_type(oftype, version):
         item_type = loxi_utils.oftype_list_elem(oftype)
         klass = oftype_get_class(item_type + "_t", version)
         if klass and klass.virtual:
-            gotype = "[]I" + klass.goname
+            gotype = "[]" + get_go_interface(klass, version)
         else:
             gotype = "[]*" + util.go_ident(item_type)
     elif gotype != None:
         gotype = gotype.name
     return gotype
+
+def class_data_members(ofclass):
+    return filter(lambda m: type(m) != ir.OFPadMember, ofclass.unherited_members)

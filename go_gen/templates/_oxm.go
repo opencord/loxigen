@@ -26,10 +26,18 @@
 :: # EPL for the specific language governing permissions and limitations
 :: # under the EPL.
 
-func (self *${ofclass.goname}) GetValue() interface{} {
+func (self *${ofclass.goname}) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *${ofclass.goname}) GetName() string {
+func (self *${ofclass.goname}) GetOXMName() string {
 	return "${ofclass.name[7:]}"
+}
+
+func (self *${ofclass.goname}) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetOXMValue())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
 }

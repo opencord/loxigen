@@ -52,3 +52,18 @@ type Uint128 struct {
 	Hi uint64
 	Lo uint64
 }
+
+type IOxm interface {
+	Serializable
+	GetTypeLen() uint32
+	GetOXMName() string
+	GetOXMValue() interface{}
+}
+
+type IAction interface {
+	Serializable
+	GetType() uint16
+	GetLen() uint16
+	GetActionName() string
+	GetActionFields() map[string]interface{}
+}

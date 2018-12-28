@@ -85,6 +85,7 @@ def build_ofclasses(version):
         for i, m in enumerate(ofclass.members):
             if type(m) != loxi_ir.OFPadMember:
                 m.goname = util.go_ident(m.name)
+                m.gotype = oftype.get_go_type(m.oftype, version)
                 if type(m) == loxi_ir.OFTypeMember and ofclass.superclass:
                     superclass = ofclass.superclass
                     member = superclass.member_by_name(m.name)

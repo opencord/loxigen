@@ -35,12 +35,12 @@
 ::
 :: var_name = "_" + ofclass.goname.lower()
 :: if ofclass.virtual:
-::     return_type = "I" + ofclass.goname
+::     return_type = go_gen.oftype.get_go_interface(ofclass, version)
 :: else:
 ::     return_type = "*" + ofclass.goname
 :: #endif
 :: if ofclass.superclass:
-::     superclass = util.go_ident(ofclass.superclass.name)
+::     superclass = ofclass.superclass.goname
 func Decode${ofclass.goname}(parent *${superclass}, decoder *goloxi.Decoder) (${return_type}, error) {
 	${var_name} := &${ofclass.goname}{${superclass}: parent}
 :: else:

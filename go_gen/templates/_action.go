@@ -30,11 +30,11 @@
 :: import go_gen.oftype
 ::
 
-func (self *${ofclass.goname}) GetName() string {
+func (self *${ofclass.goname}) GetActionName() string {
 	return "${ofclass.name[10:]}"
 }
 
-func (self *${ofclass.goname}) GetFields() map[string]interface{} {
+func (self *${ofclass.goname}) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 :: for member in ofclass.unherited_members:
 ::     if type(member) != OFPadMember:

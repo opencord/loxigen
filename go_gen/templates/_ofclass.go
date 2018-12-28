@@ -26,10 +26,12 @@
 :: # EPL for the specific language governing permissions and limitations
 :: # under the EPL.
 ::
-:: from loxi_ir import *
+:: from loxi_ir.ir import *
 :: import go_gen.oftype
 :: import go_gen.util as util
 :: import loxi_utils.loxi_utils as loxi_utils
+::
+:: data_members = go_gen.oftype.class_data_members(ofclass)
 ::
 type ${ofclass.goname} struct {
 :: # Embed superclass
@@ -38,58 +40,45 @@ type ${ofclass.goname} struct {
 :: #endif
 ::
 :: # Create struct properties
-:: for member in ofclass.unherited_members:
-::     if type(member) != OFPadMember:
-::         oftype = go_gen.oftype.get_go_type(member.oftype, version)
-::         if not oftype:
-::             raise Exception("Could not determine type for %s in %s" % (member.name, ofclass.name))
-::         #endif
-	${member.goname} ${oftype}
-::     #endif
+:: for member in data_members:
+	${member.goname} ${member.gotype}
 :: #endfor
 }
 ::
-:: if ofclass.virtual:
 
 type I${ofclass.goname} interface {
+:: # Embed superclass interface
 :: if ofclass.superclass:
-	I${util.go_ident(ofclass.superclass.name)}
+    ${go_gen.oftype.get_go_interface(ofclass.superclass, version)}
 :: else:
 	goloxi.Serializable
 :: #endif
-:: for member in ofclass.unherited_members:
-::     if type(member) != OFPadMember:
-::         oftype = go_gen.oftype.get_go_type(member.oftype, version)
-::         if not oftype:
-::             raise Exception("Could not determine type for %s in %s" % (member.name, ofclass.name))
-::         #endif
-	Get${member.goname}() ${oftype}
-::     #endif
+::
+:: # Generate prototypes for the accessors
+:: for member in data_members:
+	Get${member.goname}() ${member.gotype}
 :: #endfor
 ::
 :: if ofclass.name == "of_oxm":
-	GetName() string
-	GetValue() interface{}
+	GetOXMName() string
+	GetOXMValue() interface{}
 :: elif ofclass.name == "of_action":
-	GetName()   string
-	GetFields() map[string]interface{}
+	GetActionName()   string
+	GetActionFields() map[string]interface{}
 :: #endif
 }
 ::
-:: for member in ofclass.unherited_members:
-::     if type(member) != OFPadMember:
-::         oftype = go_gen.oftype.get_go_type(member.oftype, version)
-::         if not oftype:
-::             raise Exception("Could not determine type for %s in %s" % (member.name, ofclass.name))
-::         #endif
+:: # Generate accessor for every member
+:: for member in data_members:
 
-func (self *${ofclass.goname}) Get${member.goname}() ${oftype} {
+func (self *${ofclass.goname}) Get${member.goname}() ${member.gotype} {
 	return self.${member.goname}
 }
-::     #endif
+
+func (self *${ofclass.goname}) Set${member.goname}(v ${member.gotype}) {
+	self.${member.goname} = v
+}
 :: #endfor
-::
-:: #endif
 ::
 :: base_length = ofclass.embedded_length
 :: base_offset = 0

@@ -48,25 +48,26 @@ self.Type = ${type_member.value}
 	if err := self.${util.go_ident(ofclass.superclass.name)}.Serialize(encoder); err != nil {
 		return err
 	}
-::     if members:
-
-::     #endif
 :: #endif
 ::
-:: for member in members:
+:: for i, member in enumerate(members):
+::     if i == 0:
+
+::     #endif
 ::     if type(member) == OFPadMember:
 	encoder.Write(bytes.Repeat([]byte{0}, ${member.pad_length}))
 ::     else:
+::         # Overwrite OpenFlow version with its real value
 ::         if ofclass.name == "of_header" and member.name == "version":
 ::             member_name = version.wire_version
 ::         else:
 ::             member_name = "self." + member.goname
 ::         #endif
 ::         oftype = go_gen.oftype.lookup_type_data(member.oftype, version)
-::         if oftype:
-	${oftype.serialize.substitute(member=member_name)}
-::         elif loxi_utils.oftype_is_list(member.oftype):
+::         if loxi_utils.oftype_is_list(member.oftype):
 ::             include('_serialize_list.go', member=member)
+::         elif oftype:
+	${oftype.serialize.substitute(member=member_name)}
 ::         else:
 ::             raise Exception("Unhandled member: %s" % (str(member)))
 ::         #endif
@@ -79,10 +80,10 @@ self.Type = ${type_member.value}
 
 :: #endif
 ::
+:: # Overwrite length with its real value
 :: length_member = ofclass.length_member
 :: if length_member and not ofclass.virtual:
 
-	// Overwrite length
 ::     if length_member.oftype == "uint8_t":
 encoder.Bytes()[${length_member.offset}] = uint8(len(encoder.Bytes()))
 ::     else:
