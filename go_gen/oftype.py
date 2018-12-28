@@ -73,7 +73,7 @@ type_data_map = {
         unserialize=Template('$member = $type($decoder.ReadUint128())')),
 
     'of_port_no_t': OFTypeData(
-        name='PortNo',
+        name='Port',
         serialize=Template('$member.Serialize(encoder)'),
         unserialize=Template('$member.Decode($decoder)')),
 

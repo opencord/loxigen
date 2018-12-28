@@ -105,3 +105,17 @@ func DecodeMessage(data []byte) (goloxi.Message, error) {
 
 	return header.(goloxi.Message), nil
 }
+
+func (self *Port) Serialize(encoder *goloxi.Encoder) error {
+	portNo := PortNo(*self)
+	return portNo.Serialize(encoder)
+}
+
+func (self *Port) Decode(decoder *goloxi.Decoder) error {
+	portNo := PortNo(*self)
+	if err := portNo.Decode(decoder); err != nil {
+		return err
+	}
+	*self = Port(portNo)
+	return nil
+}
