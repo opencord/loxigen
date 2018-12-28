@@ -53,6 +53,10 @@ func (h *Header) MessageType() uint8 {
 	return h.Type
 }
 
+func (h *Header) MessageName() string {
+	return Type(h.Type).String()
+}
+
 :: fake_types = ["Checksum128", "Bitmap128", "Bitmap512", "BSNVport", "ControllerURI"]
 :: for fake_type in fake_types:
 func (self *${fake_type}) Decode(decoder *goloxi.Decoder) error {

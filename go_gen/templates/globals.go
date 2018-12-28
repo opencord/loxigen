@@ -46,6 +46,9 @@ type Deserializable interface {
 type Message interface {
 	Serializable
 	MessageType() uint8
+	MessageName() string
+	GetXid() uint32
+	SetXid(xid uint32)
 }
 
 type Uint128 struct {
