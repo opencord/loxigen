@@ -31,5 +31,9 @@ func (self *${ofclass.goname}) GetOXMName() string {
 }
 
 func (self *${ofclass.goname}) MarshalJSON() ([]byte, error) {
-	return []byte("\"" + self.GetOXMName() + "\""), nil
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
 }

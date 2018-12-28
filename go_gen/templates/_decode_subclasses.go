@@ -35,6 +35,11 @@
 	case ${value}:
 		return Decode${klass.goname}(${var_name}, decoder)
 :: #endfor
+:: if ofclass.is_oxm_id or ofclass.is_action_id:
+	default:
+		return ${var_name}, nil
+:: else:
 	default:
 		return nil, fmt.Errorf("Invalid type '%d' for '${ofclass.goname}'", ${member})
+:: #endif
 	}
