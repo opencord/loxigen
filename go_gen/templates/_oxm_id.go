@@ -27,17 +27,9 @@
 :: # under the EPL.
 
 func (self *${ofclass.goname}) GetOXMName() string {
-	return "${ofclass.name[7:]}"
-}
-
-func (self *${ofclass.goname}) GetOXMValue() interface{} {
-	return self.Value
+	return "${ofclass.name[10:]}"
 }
 
 func (self *${ofclass.goname}) MarshalJSON() ([]byte, error) {
-	jsonValue, err := json.Marshal(self.GetOXMValue())
-	if err != nil {
-		return nil, err
-	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte("\"" + self.GetOXMName() + "\""), nil
 }

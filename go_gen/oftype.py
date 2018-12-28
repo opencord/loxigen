@@ -126,6 +126,11 @@ type_data_map = {
         serialize=Template('$member.Serialize(encoder)'),
         unserialize=Template(decodeClass("Oxm"))),
 
+    'of_oxm_id_t': OFTypeData(
+        name='goloxi.IOxmId',
+        serialize=Template('$member.Serialize(encoder)'),
+        unserialize=Template(decodeClass("OxmId"))),
+
     'of_checksum_128_t': OFTypeData(
         name='Checksum128',
         serialize=Template('$member.Serialize(encoder)'),

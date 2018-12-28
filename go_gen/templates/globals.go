@@ -58,9 +58,13 @@ type Uint128 struct {
 
 type IOxm interface {
 	Serializable
-	GetTypeLen() uint32
 	GetOXMName() string
 	GetOXMValue() interface{}
+}
+
+type IOxmId interface {
+	Serializable
+	GetOXMName() string
 }
 
 type IAction interface {

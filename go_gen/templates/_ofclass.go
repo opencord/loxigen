@@ -62,6 +62,8 @@ type I${ofclass.goname} interface {
 :: if ofclass.name == "of_oxm":
 	GetOXMName() string
 	GetOXMValue() interface{}
+:: elif ofclass.name == "of_oxm_id":
+	GetOXMName() string
 :: elif ofclass.name == "of_action":
 	GetActionName()   string
 	GetActionFields() map[string]interface{}
@@ -105,6 +107,10 @@ func (self *${ofclass.goname}) Set${member.goname}(v ${member.gotype}) {
 ::
 :: if ofclass.is_oxm and ofclass.name != "of_oxm":
 ::     include('_oxm.go', ofclass=ofclass)
+:: #endif
+::
+:: if ofclass.is_oxm_id and ofclass.name != "of_oxm":
+::     include('_oxm_id.go', ofclass=ofclass)
 :: #endif
 ::
 :: if ofclass.is_action and ofclass.name != "of_action":

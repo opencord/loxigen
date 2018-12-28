@@ -163,6 +163,10 @@ class OFClass(namedtuple('OFClass', ['name', 'superclass', 'members', 'virtual',
         return self.is_instanceof("of_oxm")
 
     @property
+    def is_oxm_id(self):
+        return self.is_instanceof("of_oxm_id")
+
+    @property
     def is_oxs(self):
         return self.is_instanceof("of_oxs")
 
@@ -480,18 +484,16 @@ def build_protocol(version, ofinputs):
         name_classes[name] = c
         return c
 
-    id_class_roots = ["of_action", "of_instruction"]
+    id_class_roots = ["of_action", "of_instruction", "of_oxm"]
 
     for name in sorted(name_frontend_classes.keys()):
         c = build_class(name)
 
-        # Build ID classes for OF 1.3+
-        if version.wire_version >= 4:
-            for root in id_class_roots:
-                if c.is_instanceof(root):
-                    build_id_class(name, root)
+        for root in id_class_roots:
+            if c.is_instanceof(root):
+                build_id_class(name, root)
 
-    protocol = OFProtocol(version=version, classes=tuple(name_classes.values()), enums=tuple(name_enums.values()))
+    protocol = OFProtocol(version=version, classes=name_classes.values(), enums=name_enums.values())
     for e in chain(protocol.classes, protocol.enums):
         e.protocol = protocol
     return protocol

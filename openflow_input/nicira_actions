@@ -58,8 +58,8 @@ struct of_action_nx_reg_move(align=8) : of_action_nicira {
     uint16_t n_bits;
     uint16_t src_ofs;
     uint16_t dst_ofs;
-    of_oxm_t src;
-    of_oxm_t dst;
+    of_oxm_id_t src;
+    of_oxm_id_t dst;
 };
 
 struct of_action_nx_reg_load : of_action_nicira {
@@ -68,7 +68,7 @@ struct of_action_nx_reg_load : of_action_nicira {
     uint32_t experimenter == 0x2320;
     uint16_t subtype == 7;
     uint16_t ofs_nbits;
-    uint32_t dst;
+    of_oxm_id_t src_field;
     uint64_t value;
 };
 
@@ -101,7 +101,7 @@ struct of_action_nx_multipath : of_action_nicira {
     uint32_t arg;
     pad(2);
     uint16_t ofs_nbits;
-    uint32_t dst;
+    of_oxm_id_t dst;
 };
 
 struct of_action_nx_bundle : of_action_nicira {
@@ -115,7 +115,7 @@ struct of_action_nx_bundle : of_action_nicira {
     uint32_t slave_type;
     uint16_t n_slaves;
     uint16_t ofs_nbits;
-    uint32_t dst;
+    of_oxm_id_t dst;
     pad(4);
 };
 
