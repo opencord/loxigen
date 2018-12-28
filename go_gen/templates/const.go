@@ -75,14 +75,14 @@ func (self ${ident}) MarshalJSON() ([]byte, error) {
 	}
 ::             #endfor
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
-::         elif not enum.is_bitmask and enum.params.get("complete", False):
+::         elif not enum.is_bitmask and enum.params.get("complete", "") == "True":
 	return []byte(fmt.Sprintf("%s", self)), nil
 ::         else:
 	return []byte(fmt.Sprintf("%d", self)), nil
 ::         #endif
 }
 ::
-::         if not enum.is_bitmask and enum.params.get("complete", False):
+::         if not enum.is_bitmask and enum.params.get("complete", "") == "True":
 
 func (self ${ident}) String() string {
 	switch self {
