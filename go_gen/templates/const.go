@@ -35,6 +35,7 @@
 :: include('_copyright.go')
 
 :: include('_autogen.go')
+:: import os
 :: import go_gen.util as util
 
 package ${package}
@@ -57,12 +58,15 @@ const (
 ::         #endif
 ::     #endfor
 )
+::
 ::     if enum.params.get("wire_type", False):
 ::         ident = util.go_ident(enum.name)
 
 type ${ident} ${enum.params["wire_type"][:-2]}
 
 func (self ${ident}) MarshalJSON() ([]byte, error) {
+::         keys = []
+::         prefix = os.path.commonprefix([key for (key, value) in enum.values]) if len(enum.values) > 1	 else ""
 ::         if enum.is_bitmask:
 	var flags []string
 ::             for (key, value) in enum.values:
@@ -71,25 +75,24 @@ func (self ${ident}) MarshalJSON() ([]byte, error) {
 	}
 ::             #endfor
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
+::         elif not enum.is_bitmask and enum.params.get("complete", False):
+	return []byte(fmt.Sprintf("%s", self)), nil
 ::         else:
 	return []byte(fmt.Sprintf("%d", self)), nil
 ::         #endif
 }
 ::
-::         if not enum.is_bitmask:
+::         if not enum.is_bitmask and enum.params.get("complete", False):
 
 func (self ${ident}) String() string {
 	switch self {
 ::             for (key, value) in enum.values:
 	case ${util.go_ident(key)}:
-		return "${util.go_ident(key)}"
+		return "\"${key[len(prefix):].lower()}\""
 ::             #endfor
-::             if enum.params.get("complete", False):
 	default:
-		return fmt.Sprintf("Invalid value '%d' for ${ident}", self)
-::             #endif
+		return fmt.Sprintf("\"Invalid value '%d' for ${ident}\"", self)
 	}
-	return fmt.Sprintf("%d", self)
 }
 ::         #endif
 
