@@ -50,7 +50,7 @@ struct of_action_nx_pop_queue : of_action_nicira {
     uint16_t subtype == 5;
 };
 
-struct of_action_nx_reg_move : of_action_nicira {
+struct of_action_nx_reg_move(align=8) : of_action_nicira {
     uint16_t type == 65535;
     uint16_t len;
     uint32_t experimenter == 0x2320;
@@ -58,6 +58,8 @@ struct of_action_nx_reg_move : of_action_nicira {
     uint16_t n_bits;
     uint16_t src_ofs;
     uint16_t dst_ofs;
+    of_oxm_t src;
+    of_oxm_t dst;
 };
 
 struct of_action_nx_reg_load : of_action_nicira {
@@ -441,4 +443,81 @@ struct of_action_nx_debug_recirc : of_action_nicira {
     uint16_t len;
     uint32_t experimenter == 0x2320;
     uint16_t subtype == 255;
+};
+
+struct of_action_nx_set_queue : of_action_nicira {
+    uint16_t type == 65535;
+    uint16_t len;
+    uint32_t experimenter == 0x2320;
+    uint16_t subtype == 4;
+    uint32_t value;
+};
+
+struct of_action_nx_push_mpls : of_action_nicira {
+    uint16_t type == 65535;
+    uint16_t len;
+    uint32_t experimenter == 0x2320;
+    uint16_t subtype == 23;
+    uint16_t value;
+};
+
+struct of_action_nx_pop_mpls : of_action_nicira {
+    uint16_t type == 65535;
+    uint16_t len;
+    uint32_t experimenter == 0x2320;
+    uint16_t subtype == 24;
+    uint16_t value;
+};
+
+struct of_action_nx_set_mpls_ttl : of_action_nicira {
+    uint16_t type == 65535;
+    uint16_t len;
+    uint32_t experimenter == 0x2320;
+    uint16_t subtype == 25;
+    uint8_t value;
+};
+
+struct of_action_nx_dec_mpls_ttl : of_action_nicira {
+    uint16_t type == 65535;
+    uint16_t len;
+    uint32_t experimenter == 0x2320;
+    uint16_t subtype == 26;
+};
+
+struct of_action_nx_set_mpls_label : of_action_nicira {
+    uint16_t type == 65535;
+    uint16_t len;
+    uint32_t experimenter == 0x2320;
+    uint16_t subtype == 30;
+    uint32_t value;
+};
+
+struct of_action_nx_set_mpls_tc : of_action_nicira {
+    uint16_t type == 65535;
+    uint16_t len;
+    uint32_t experimenter == 0x2320;
+    uint16_t subtype == 31;
+    uint8_t value;
+};
+
+struct of_action_nx_group : of_action_nicira {
+    uint16_t type == 65535;
+    uint16_t len;
+    uint32_t experimenter == 0x2320;
+    uint16_t subtype == 40;
+    uint32_t value;
+};
+
+struct of_action_nx_dec_nsh_ttl : of_action_nicira {
+    uint16_t type == 65535;
+    uint16_t len;
+    uint32_t experimenter == 0x2320;
+    uint16_t subtype == 48;
+};
+
+struct of_action_nx_debug_slow : of_action_nicira {
+    uint16_t type == 65535;
+    uint16_t len;
+    uint32_t experimenter == 0x2320;
+    uint16_t subtype == 254;
 };
