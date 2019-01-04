@@ -89,7 +89,11 @@
 ::         if type(member) == OFLengthMember:
 	oldDecoder := decoder
 	defer func() { decoder = oldDecoder }()
+::             if ofclass.has_external_alignment:
+	decoder = decoder.SliceDecoder(int(((${member_name})+7)/8*8), ${member.length} + ${member.offset})
+::             else:
 	decoder = decoder.SliceDecoder(int(${member_name}), ${member.length} + ${member.offset})
+::             #endif
 ::         #endif
 ::
 ::     #endif
