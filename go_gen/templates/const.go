@@ -71,7 +71,7 @@ func (self ${ident}) MarshalJSON() ([]byte, error) {
 	var flags []string
 ::             for (key, value) in enum.values:
 	if self & ${util.go_ident(key)} == ${util.go_ident(key)} {
-		flags = append(flags, "\"${util.go_ident(key)}\": true")
+		flags = append(flags, "\"${util.go_ident(key[len(prefix):])}\": true")
 	}
 ::             #endfor
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
