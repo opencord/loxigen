@@ -98,6 +98,9 @@ def build_ofclasses(version):
             
                 if type(m) == loxi_ir.OFFieldLengthMember:
                     ofclass.field_lengths[m.field_name] = m
+                elif m.name == "type_len":
+                    ofclass.field_lengths["value"] = m
+                    ofclass.field_lengths["value_mask"] = m
 
         ofclass.embedded_struct = (ofclass.name + "_t" in oftype.embedded_structs) or \
                                   (ofclass.name[:-2] + "t" in oftype.embedded_structs)

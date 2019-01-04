@@ -114,7 +114,7 @@ type_data_map = {
     'of_octets_t': OFTypeData(
         name='[]byte',
         serialize=Template('encoder.Write($member)'),
-        unserialize=Template("$member = $decoder.Read($decoder.Length())")),
+        unserialize=Template("$member = $decoder.Read(int($decoder_length))")),
 
     'of_bitmap_128_t': OFTypeData(
         name='Bitmap128',

@@ -39,6 +39,7 @@
 :: field_length_members = {}
 :: for member in members:
 ::     decoder_expr = 'decoder'
+::     decoder_length = 'decoder.Length()'
 ::
 ::     if type(member) == OFPadMember:
 	decoder.Skip(${member.pad_length})
@@ -49,10 +50,13 @@
 ::         if type(member) in [OFDataMember, OFOptionalDataMember, OFDiscriminatorMember]:
 ::             if member.name in ofclass.field_lengths:
 ::                 field_length = ofclass.field_lengths[member.name]
+::                 decoder_length = "%s.%s" % (self_name, field_length.goname)
 ::                 if 'bits' in field_length.name:
-::                     decoder_expr = 'decoder.SliceDecoder(int((%s.%s+15)/16*2), 0)' % (self_name, ofclass.field_lengths[member.name].goname)
+::                     decoder_expr = 'decoder.SliceDecoder(int((%s+15)/16*2), 0)' % (decoder_length,)
+::                 elif field_length.name == "type_len":
+::                     decoder_length = decoder_length + " & 0xFF"
 ::                 else:
-::                     decoder_expr = 'decoder.SliceDecoder(int(%s.%s), 0)' % (self_name, ofclass.field_lengths[member.name].goname)
+::                     decoder_expr = 'decoder.SliceDecoder(int(%s), 0)' % (decoder_length,)
 ::                 #endif
 ::             else:
 ::                 decoder_expr = 'decoder'
@@ -68,7 +72,7 @@
 ::             if go_gen.oftype.get_go_enum(member.oftype, version):
 ::                 _type = util.go_ident(member.oftype)
 ::             #endif
-	${oftype.unserialize.substitute(member=member_name, type=_type, decoder=decoder_expr)}
+	${oftype.unserialize.substitute(member=member_name, type=_type, decoder=decoder_expr, decoder_length=decoder_length)}
 ::             klass = go_gen.oftype.oftype_get_class(member.oftype, version)
 ::             if klass and hasattr(klass, "params") and klass.params.get("align", 0):
 	decoder.SkipAlign()
