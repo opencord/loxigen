@@ -47,3 +47,11 @@ func (self *${ofclass.goname}) GetActionFields() map[string]interface{} {
 :: #endfor
 	}
 }
+
+func (self *${ofclass.goname}) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
