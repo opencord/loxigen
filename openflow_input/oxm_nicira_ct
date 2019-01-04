@@ -35,12 +35,12 @@
 // Nicira extension for Connection Tracking State (105)
 struct of_oxm_conn_tracking_state : of_oxm {
 	uint32_t type_len == 0x0001d204;
-	uint32_t value;
+	enum ofp_cs_states value;
 };
 
 struct of_oxm_conn_tracking_state_masked : of_oxm {
 	uint32_t type_len == 0x0001d308;
-	uint32_t value;
+	enum ofp_cs_states value;
 	uint32_t value_mask;
 };
 

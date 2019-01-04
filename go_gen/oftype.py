@@ -156,6 +156,11 @@ type_data_map = {
         serialize=Template('$member.Serialize(encoder)'),
         unserialize=Template(decodeClass('ControllerStatusEntry'))),
 
+    'of_ed_prop_header_t': OFTypeData(
+        name='IHeader',
+        serialize=Template('$member.Serialize(encoder)'),
+        unserialize=Template(decodeClass('EdPropHeader'))),
+
     'of_header_t': OFTypeData(
         name='IHeader',
         serialize=Template('$member.Serialize(encoder)'),
@@ -194,7 +199,6 @@ embedded_structs = {
     'of_port_desc_prop_bsn_alarm_t': 'PortDescPropBSNAlarm',
     'of_port_desc_prop_bsn_diag_t': 'PortDescProp_BSNDiag',
     'of_stat_t': 'Stat',
-    'ofp_ed_prop_header_t': 'EdPropHeader',
 }
 
 for (cls, gotype) in embedded_structs.items():
