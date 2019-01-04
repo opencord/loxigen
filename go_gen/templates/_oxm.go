@@ -35,7 +35,21 @@ func (self *${ofclass.goname}) GetOXMValue() interface{} {
 }
 
 func (self *${ofclass.goname}) MarshalJSON() ([]byte, error) {
-	jsonValue, err := json.Marshal(self.GetOXMValue())
+	var value interface{} = self.GetOXMValue()
+	switch t := value.(type) {
+	case net.HardwareAddr:
+		value = t.String()
+	case net.IP:
+		value = t.String()
+	default:
+		if s, ok := t.(fmt.Stringer); ok {
+			value = s.String()
+		} else {
+			value = t
+		}
+	}
+
+	jsonValue, err := json.Marshal(value)
 	if err != nil {
 		return nil, err
 	}
