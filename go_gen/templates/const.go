@@ -91,7 +91,7 @@ func (self ${ident}) String() string {
 		return "${key[len(prefix):].lower()}"
 ::             #endfor
 	default:
-		return fmt.Sprintf("Invalid value '%d' for ${ident}", self)
+		return fmt.Sprintf("%d", self)
 	}
 }
 ::         #endif
