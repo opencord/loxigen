@@ -76,7 +76,7 @@ func (self ${ident}) MarshalJSON() ([]byte, error) {
 ::             #endfor
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 ::         elif not enum.is_bitmask and enum.params.get("complete", "") == "True":
-	return []byte(fmt.Sprintf("%s", self)), nil
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
 ::         else:
 	return []byte(fmt.Sprintf("%d", self)), nil
 ::         #endif
@@ -88,10 +88,10 @@ func (self ${ident}) String() string {
 	switch self {
 ::             for (key, value) in enum.values:
 	case ${util.go_ident(key)}:
-		return "\"${key[len(prefix):].lower()}\""
+		return "${key[len(prefix):].lower()}"
 ::             #endfor
 	default:
-		return fmt.Sprintf("\"Invalid value '%d' for ${ident}\"", self)
+		return fmt.Sprintf("Invalid value '%d' for ${ident}", self)
 	}
 }
 ::         #endif
