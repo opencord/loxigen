@@ -123,12 +123,12 @@ struct of_oxm_eth_src_masked : of_oxm {
 
 struct of_oxm_eth_type : of_oxm {
     uint32_t type_len == 0x80000a02;
-    uint16_t value;
+    enum ofp_ethernet_type value;
 };
 
 struct of_oxm_eth_type_masked : of_oxm {
     uint32_t type_len == 0x80000b04;
-    uint16_t value;
+    enum ofp_ethernet_type value;
     uint16_t value_mask;
 };
 
@@ -145,12 +145,12 @@ struct of_oxm_icmpv4_code_masked : of_oxm {
 
 struct of_oxm_icmpv4_type : of_oxm {
     uint32_t type_len == 0x80002601;
-    uint8_t value;
+    enum ofp_icmp_type value;
 };
 
 struct of_oxm_icmpv4_type_masked : of_oxm {
     uint32_t type_len == 0x80002702;
-    uint8_t value;
+    enum ofp_icmp_type value;
     uint8_t value_mask;
 };
 
@@ -167,12 +167,12 @@ struct of_oxm_icmpv6_code_masked : of_oxm {
 
 struct of_oxm_icmpv6_type : of_oxm {
     uint32_t type_len == 0x80003a01;
-    uint8_t value;
+    enum ofp_icmpv6_type value;
 };
 
 struct of_oxm_icmpv6_type_masked : of_oxm {
     uint32_t type_len == 0x80003b02;
-    uint8_t value;
+    enum ofp_icmpv6_type value;
     uint8_t value_mask;
 };
 
@@ -222,12 +222,12 @@ struct of_oxm_ip_ecn_masked : of_oxm {
 
 struct of_oxm_ip_proto : of_oxm {
     uint32_t type_len == 0x80001401;
-    uint8_t value;
+    enum ofp_ip_prototype value;
 };
 
 struct of_oxm_ip_proto_masked : of_oxm {
     uint32_t type_len == 0x80001502;
-    uint8_t value;
+    enum ofp_ip_prototype value;
     uint8_t value_mask;
 };
 
