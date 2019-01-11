@@ -1387,13 +1387,13 @@ struct of_nxm_tcp_dst_masked : of_oxm {
 
 struct of_nxm_tcp_flags : of_oxm {
     uint32_t type_len == 0x00014402;
-    of_octets_t value;
+    enum ofp_tcp_flags value;
 };
 
 struct of_nxm_tcp_flags_masked : of_oxm {
     uint32_t type_len == 0x00014502;
-    of_octets_t value;
-    of_octets_t value_mask;
+    enum ofp_tcp_flags value;
+    uint16_t value_mask;
 };
 
 struct of_nxm_udp_src : of_oxm {

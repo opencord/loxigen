@@ -135,3 +135,14 @@ enum ofp_ip_prototype(wire_type=uint8_t, complete=True) {
     IPPROTO_MH = 135,
     IPPROTO_L2TP = 115,
 };
+
+enum ofp_tcp_flags(wire_type=uint16_t, bitmask=True, complete=True) {
+    TCP_FLAG_CWR = 0x0080,
+    TCP_FLAG_ECE = 0x0040,
+    TCP_FLAG_URG = 0x0020,
+    TCP_FLAG_ACK = 0x0010,
+    TCP_FLAG_PSH = 0x0008,
+    TCP_FLAG_RST = 0x0004,
+    TCP_FLAG_SYN = 0x0002,
+    TCP_FLAG_FIN = 0x0001,
+};
