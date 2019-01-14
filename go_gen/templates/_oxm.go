@@ -25,6 +25,9 @@
 :: # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 :: # EPL for the specific language governing permissions and limitations
 :: # under the EPL.
+::
+:: masked = ofclass.name.endswith("_masked")
+::
 
 func (self *${ofclass.goname}) GetOXMName() string {
 	return "${ofclass.name[7:]}"
@@ -33,25 +36,25 @@ func (self *${ofclass.goname}) GetOXMName() string {
 func (self *${ofclass.goname}) GetOXMValue() interface{} {
 	return self.Value
 }
+:: if masked:
+
+func (self *${ofclass.goname}) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
+:: #endif
 
 func (self *${ofclass.goname}) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+:: if masked:
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
+:: else:
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
+:: #endif
 }

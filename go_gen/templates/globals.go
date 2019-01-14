@@ -64,6 +64,13 @@ type IOxm interface {
 	GetOXMValue() interface{}
 }
 
+type IOxmMasked interface {
+	Serializable
+	GetOXMName() string
+	GetOXMValue() interface{}
+	GetOXMValueMask() interface{}
+}
+
 type IOxmId interface {
 	Serializable
 	GetOXMName() string
