@@ -33,7 +33,7 @@ struct of_nxm_dp_hash : of_oxm {
 };
 
 struct of_nxm_dp_hash_masked : of_oxm {
-    uint32_t type_len == 0x00014704;
+    uint32_t type_len == 0x00014708;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -54,7 +54,7 @@ struct of_nxm_tun_id : of_oxm {
 };
 
 struct of_nxm_tun_id_masked : of_oxm {
-    uint32_t type_len == 0x00012108;
+    uint32_t type_len == 0x00012110;
     uint64_t value;
     uint64_t value_mask;
 };
@@ -65,7 +65,7 @@ struct of_nxm_tun_src : of_oxm {
 };
 
 struct of_nxm_tun_src_masked : of_oxm {
-    uint32_t type_len == 0x00013f04;
+    uint32_t type_len == 0x00013f08;
     of_ipv4_t value;
     of_ipv4_t value_mask;
 };
@@ -76,7 +76,7 @@ struct of_nxm_tun_dst : of_oxm {
 };
 
 struct of_nxm_tun_dst_masked : of_oxm {
-    uint32_t type_len == 0x00014104;
+    uint32_t type_len == 0x00014108;
     of_ipv4_t value;
     of_ipv4_t value_mask;
 };
@@ -87,7 +87,7 @@ struct of_nxm_tun_ipv6_src : of_oxm {
 };
 
 struct of_nxm_tun_ipv6_src_masked : of_oxm {
-    uint32_t type_len == 0x0001db10;
+    uint32_t type_len == 0x0001db20;
     of_ipv6_t value;
     of_ipv6_t value_mask;
 };
@@ -98,20 +98,20 @@ struct of_nxm_tun_ipv6_dst : of_oxm {
 };
 
 struct of_nxm_tun_ipv6_dst_masked : of_oxm {
-    uint32_t type_len == 0x0001dd10;
+    uint32_t type_len == 0x0001dd20;
     of_ipv6_t value;
     of_ipv6_t value_mask;
 };
 
 struct of_nxm_tun_flags : of_oxm {
     uint32_t type_len == 0x0001d002;
-    of_octets_t value;
+    uint16_t value;
 };
 
 struct of_nxm_tun_flags_masked : of_oxm {
-    uint32_t type_len == 0x0001d102;
-    of_octets_t value;
-    of_octets_t value_mask;
+    uint32_t type_len == 0x0001d104;
+    uint16_t value;
+    uint16_t value_mask;
 };
 
 struct of_nxm_tun_gbp_id : of_oxm {
@@ -120,7 +120,7 @@ struct of_nxm_tun_gbp_id : of_oxm {
 };
 
 struct of_nxm_tun_gbp_id_masked : of_oxm {
-    uint32_t type_len == 0x00014d02;
+    uint32_t type_len == 0x00014d04;
     uint16_t value;
     uint16_t value_mask;
 };
@@ -131,7 +131,7 @@ struct of_nxm_tun_gbp_flags : of_oxm {
 };
 
 struct of_nxm_tun_gbp_flags_masked : of_oxm {
-    uint32_t type_len == 0x00014f01;
+    uint32_t type_len == 0x00014f02;
     uint8_t value;
     uint8_t value_mask;
 };
@@ -142,7 +142,7 @@ struct of_nxm_tun_metadata0 : of_oxm {
 };
 
 struct of_nxm_tun_metadata0_masked : of_oxm {
-    uint32_t type_len == 0x0001517c;
+    uint32_t type_len == 0x000151f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -153,7 +153,7 @@ struct of_nxm_tun_metadata1 : of_oxm {
 };
 
 struct of_nxm_tun_metadata1_masked : of_oxm {
-    uint32_t type_len == 0x0001537c;
+    uint32_t type_len == 0x000153f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -164,7 +164,7 @@ struct of_nxm_tun_metadata2 : of_oxm {
 };
 
 struct of_nxm_tun_metadata2_masked : of_oxm {
-    uint32_t type_len == 0x0001557c;
+    uint32_t type_len == 0x000155f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -175,7 +175,7 @@ struct of_nxm_tun_metadata3 : of_oxm {
 };
 
 struct of_nxm_tun_metadata3_masked : of_oxm {
-    uint32_t type_len == 0x0001577c;
+    uint32_t type_len == 0x000157f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -186,7 +186,7 @@ struct of_nxm_tun_metadata4 : of_oxm {
 };
 
 struct of_nxm_tun_metadata4_masked : of_oxm {
-    uint32_t type_len == 0x0001597c;
+    uint32_t type_len == 0x000159f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -197,7 +197,7 @@ struct of_nxm_tun_metadata5 : of_oxm {
 };
 
 struct of_nxm_tun_metadata5_masked : of_oxm {
-    uint32_t type_len == 0x00015b7c;
+    uint32_t type_len == 0x00015bf8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -208,7 +208,7 @@ struct of_nxm_tun_metadata6 : of_oxm {
 };
 
 struct of_nxm_tun_metadata6_masked : of_oxm {
-    uint32_t type_len == 0x00015d7c;
+    uint32_t type_len == 0x00015df8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -219,7 +219,7 @@ struct of_nxm_tun_metadata7 : of_oxm {
 };
 
 struct of_nxm_tun_metadata7_masked : of_oxm {
-    uint32_t type_len == 0x00015f7c;
+    uint32_t type_len == 0x00015ff8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -230,7 +230,7 @@ struct of_nxm_tun_metadata8 : of_oxm {
 };
 
 struct of_nxm_tun_metadata8_masked : of_oxm {
-    uint32_t type_len == 0x0001617c;
+    uint32_t type_len == 0x000161f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -241,7 +241,7 @@ struct of_nxm_tun_metadata9 : of_oxm {
 };
 
 struct of_nxm_tun_metadata9_masked : of_oxm {
-    uint32_t type_len == 0x0001637c;
+    uint32_t type_len == 0x000163f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -252,7 +252,7 @@ struct of_nxm_tun_metadata10 : of_oxm {
 };
 
 struct of_nxm_tun_metadata10_masked : of_oxm {
-    uint32_t type_len == 0x0001657c;
+    uint32_t type_len == 0x000165f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -263,7 +263,7 @@ struct of_nxm_tun_metadata11 : of_oxm {
 };
 
 struct of_nxm_tun_metadata11_masked : of_oxm {
-    uint32_t type_len == 0x0001677c;
+    uint32_t type_len == 0x000167f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -274,7 +274,7 @@ struct of_nxm_tun_metadata12 : of_oxm {
 };
 
 struct of_nxm_tun_metadata12_masked : of_oxm {
-    uint32_t type_len == 0x0001697c;
+    uint32_t type_len == 0x000169f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -285,7 +285,7 @@ struct of_nxm_tun_metadata13 : of_oxm {
 };
 
 struct of_nxm_tun_metadata13_masked : of_oxm {
-    uint32_t type_len == 0x00016b7c;
+    uint32_t type_len == 0x00016bf8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -296,7 +296,7 @@ struct of_nxm_tun_metadata14 : of_oxm {
 };
 
 struct of_nxm_tun_metadata14_masked : of_oxm {
-    uint32_t type_len == 0x00016d7c;
+    uint32_t type_len == 0x00016df8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -307,7 +307,7 @@ struct of_nxm_tun_metadata15 : of_oxm {
 };
 
 struct of_nxm_tun_metadata15_masked : of_oxm {
-    uint32_t type_len == 0x00016f7c;
+    uint32_t type_len == 0x00016ff8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -318,7 +318,7 @@ struct of_nxm_tun_metadata16 : of_oxm {
 };
 
 struct of_nxm_tun_metadata16_masked : of_oxm {
-    uint32_t type_len == 0x0001717c;
+    uint32_t type_len == 0x000171f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -329,7 +329,7 @@ struct of_nxm_tun_metadata17 : of_oxm {
 };
 
 struct of_nxm_tun_metadata17_masked : of_oxm {
-    uint32_t type_len == 0x0001737c;
+    uint32_t type_len == 0x000173f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -340,7 +340,7 @@ struct of_nxm_tun_metadata18 : of_oxm {
 };
 
 struct of_nxm_tun_metadata18_masked : of_oxm {
-    uint32_t type_len == 0x0001757c;
+    uint32_t type_len == 0x000175f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -351,7 +351,7 @@ struct of_nxm_tun_metadata19 : of_oxm {
 };
 
 struct of_nxm_tun_metadata19_masked : of_oxm {
-    uint32_t type_len == 0x0001777c;
+    uint32_t type_len == 0x000177f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -362,7 +362,7 @@ struct of_nxm_tun_metadata20 : of_oxm {
 };
 
 struct of_nxm_tun_metadata20_masked : of_oxm {
-    uint32_t type_len == 0x0001797c;
+    uint32_t type_len == 0x000179f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -373,7 +373,7 @@ struct of_nxm_tun_metadata21 : of_oxm {
 };
 
 struct of_nxm_tun_metadata21_masked : of_oxm {
-    uint32_t type_len == 0x00017b7c;
+    uint32_t type_len == 0x00017bf8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -384,7 +384,7 @@ struct of_nxm_tun_metadata22 : of_oxm {
 };
 
 struct of_nxm_tun_metadata22_masked : of_oxm {
-    uint32_t type_len == 0x00017d7c;
+    uint32_t type_len == 0x00017df8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -395,7 +395,7 @@ struct of_nxm_tun_metadata23 : of_oxm {
 };
 
 struct of_nxm_tun_metadata23_masked : of_oxm {
-    uint32_t type_len == 0x00017f7c;
+    uint32_t type_len == 0x00017ff8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -406,7 +406,7 @@ struct of_nxm_tun_metadata24 : of_oxm {
 };
 
 struct of_nxm_tun_metadata24_masked : of_oxm {
-    uint32_t type_len == 0x0001817c;
+    uint32_t type_len == 0x000181f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -417,7 +417,7 @@ struct of_nxm_tun_metadata25 : of_oxm {
 };
 
 struct of_nxm_tun_metadata25_masked : of_oxm {
-    uint32_t type_len == 0x0001837c;
+    uint32_t type_len == 0x000183f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -428,7 +428,7 @@ struct of_nxm_tun_metadata26 : of_oxm {
 };
 
 struct of_nxm_tun_metadata26_masked : of_oxm {
-    uint32_t type_len == 0x0001857c;
+    uint32_t type_len == 0x000185f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -439,7 +439,7 @@ struct of_nxm_tun_metadata27 : of_oxm {
 };
 
 struct of_nxm_tun_metadata27_masked : of_oxm {
-    uint32_t type_len == 0x0001877c;
+    uint32_t type_len == 0x000187f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -450,7 +450,7 @@ struct of_nxm_tun_metadata28 : of_oxm {
 };
 
 struct of_nxm_tun_metadata28_masked : of_oxm {
-    uint32_t type_len == 0x0001897c;
+    uint32_t type_len == 0x000189f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -461,7 +461,7 @@ struct of_nxm_tun_metadata29 : of_oxm {
 };
 
 struct of_nxm_tun_metadata29_masked : of_oxm {
-    uint32_t type_len == 0x00018b7c;
+    uint32_t type_len == 0x00018bf8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -472,7 +472,7 @@ struct of_nxm_tun_metadata30 : of_oxm {
 };
 
 struct of_nxm_tun_metadata30_masked : of_oxm {
-    uint32_t type_len == 0x00018d7c;
+    uint32_t type_len == 0x00018df8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -483,7 +483,7 @@ struct of_nxm_tun_metadata31 : of_oxm {
 };
 
 struct of_nxm_tun_metadata31_masked : of_oxm {
-    uint32_t type_len == 0x00018f7c;
+    uint32_t type_len == 0x00018ff8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -494,7 +494,7 @@ struct of_nxm_tun_metadata32 : of_oxm {
 };
 
 struct of_nxm_tun_metadata32_masked : of_oxm {
-    uint32_t type_len == 0x0001917c;
+    uint32_t type_len == 0x000191f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -505,7 +505,7 @@ struct of_nxm_tun_metadata33 : of_oxm {
 };
 
 struct of_nxm_tun_metadata33_masked : of_oxm {
-    uint32_t type_len == 0x0001937c;
+    uint32_t type_len == 0x000193f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -516,7 +516,7 @@ struct of_nxm_tun_metadata34 : of_oxm {
 };
 
 struct of_nxm_tun_metadata34_masked : of_oxm {
-    uint32_t type_len == 0x0001957c;
+    uint32_t type_len == 0x000195f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -527,7 +527,7 @@ struct of_nxm_tun_metadata35 : of_oxm {
 };
 
 struct of_nxm_tun_metadata35_masked : of_oxm {
-    uint32_t type_len == 0x0001977c;
+    uint32_t type_len == 0x000197f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -538,7 +538,7 @@ struct of_nxm_tun_metadata36 : of_oxm {
 };
 
 struct of_nxm_tun_metadata36_masked : of_oxm {
-    uint32_t type_len == 0x0001997c;
+    uint32_t type_len == 0x000199f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -549,7 +549,7 @@ struct of_nxm_tun_metadata37 : of_oxm {
 };
 
 struct of_nxm_tun_metadata37_masked : of_oxm {
-    uint32_t type_len == 0x00019b7c;
+    uint32_t type_len == 0x00019bf8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -560,7 +560,7 @@ struct of_nxm_tun_metadata38 : of_oxm {
 };
 
 struct of_nxm_tun_metadata38_masked : of_oxm {
-    uint32_t type_len == 0x00019d7c;
+    uint32_t type_len == 0x00019df8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -571,7 +571,7 @@ struct of_nxm_tun_metadata39 : of_oxm {
 };
 
 struct of_nxm_tun_metadata39_masked : of_oxm {
-    uint32_t type_len == 0x00019f7c;
+    uint32_t type_len == 0x00019ff8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -582,7 +582,7 @@ struct of_nxm_tun_metadata40 : of_oxm {
 };
 
 struct of_nxm_tun_metadata40_masked : of_oxm {
-    uint32_t type_len == 0x0001a17c;
+    uint32_t type_len == 0x0001a1f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -593,7 +593,7 @@ struct of_nxm_tun_metadata41 : of_oxm {
 };
 
 struct of_nxm_tun_metadata41_masked : of_oxm {
-    uint32_t type_len == 0x0001a37c;
+    uint32_t type_len == 0x0001a3f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -604,7 +604,7 @@ struct of_nxm_tun_metadata42 : of_oxm {
 };
 
 struct of_nxm_tun_metadata42_masked : of_oxm {
-    uint32_t type_len == 0x0001a57c;
+    uint32_t type_len == 0x0001a5f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -615,7 +615,7 @@ struct of_nxm_tun_metadata43 : of_oxm {
 };
 
 struct of_nxm_tun_metadata43_masked : of_oxm {
-    uint32_t type_len == 0x0001a77c;
+    uint32_t type_len == 0x0001a7f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -626,7 +626,7 @@ struct of_nxm_tun_metadata44 : of_oxm {
 };
 
 struct of_nxm_tun_metadata44_masked : of_oxm {
-    uint32_t type_len == 0x0001a97c;
+    uint32_t type_len == 0x0001a9f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -637,7 +637,7 @@ struct of_nxm_tun_metadata45 : of_oxm {
 };
 
 struct of_nxm_tun_metadata45_masked : of_oxm {
-    uint32_t type_len == 0x0001ab7c;
+    uint32_t type_len == 0x0001abf8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -648,7 +648,7 @@ struct of_nxm_tun_metadata46 : of_oxm {
 };
 
 struct of_nxm_tun_metadata46_masked : of_oxm {
-    uint32_t type_len == 0x0001ad7c;
+    uint32_t type_len == 0x0001adf8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -659,7 +659,7 @@ struct of_nxm_tun_metadata47 : of_oxm {
 };
 
 struct of_nxm_tun_metadata47_masked : of_oxm {
-    uint32_t type_len == 0x0001af7c;
+    uint32_t type_len == 0x0001aff8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -670,7 +670,7 @@ struct of_nxm_tun_metadata48 : of_oxm {
 };
 
 struct of_nxm_tun_metadata48_masked : of_oxm {
-    uint32_t type_len == 0x0001b17c;
+    uint32_t type_len == 0x0001b1f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -681,7 +681,7 @@ struct of_nxm_tun_metadata49 : of_oxm {
 };
 
 struct of_nxm_tun_metadata49_masked : of_oxm {
-    uint32_t type_len == 0x0001b37c;
+    uint32_t type_len == 0x0001b3f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -692,7 +692,7 @@ struct of_nxm_tun_metadata50 : of_oxm {
 };
 
 struct of_nxm_tun_metadata50_masked : of_oxm {
-    uint32_t type_len == 0x0001b57c;
+    uint32_t type_len == 0x0001b5f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -703,7 +703,7 @@ struct of_nxm_tun_metadata51 : of_oxm {
 };
 
 struct of_nxm_tun_metadata51_masked : of_oxm {
-    uint32_t type_len == 0x0001b77c;
+    uint32_t type_len == 0x0001b7f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -714,7 +714,7 @@ struct of_nxm_tun_metadata52 : of_oxm {
 };
 
 struct of_nxm_tun_metadata52_masked : of_oxm {
-    uint32_t type_len == 0x0001b97c;
+    uint32_t type_len == 0x0001b9f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -725,7 +725,7 @@ struct of_nxm_tun_metadata53 : of_oxm {
 };
 
 struct of_nxm_tun_metadata53_masked : of_oxm {
-    uint32_t type_len == 0x0001bb7c;
+    uint32_t type_len == 0x0001bbf8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -736,7 +736,7 @@ struct of_nxm_tun_metadata54 : of_oxm {
 };
 
 struct of_nxm_tun_metadata54_masked : of_oxm {
-    uint32_t type_len == 0x0001bd7c;
+    uint32_t type_len == 0x0001bdf8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -747,7 +747,7 @@ struct of_nxm_tun_metadata55 : of_oxm {
 };
 
 struct of_nxm_tun_metadata55_masked : of_oxm {
-    uint32_t type_len == 0x0001bf7c;
+    uint32_t type_len == 0x0001bff8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -758,7 +758,7 @@ struct of_nxm_tun_metadata56 : of_oxm {
 };
 
 struct of_nxm_tun_metadata56_masked : of_oxm {
-    uint32_t type_len == 0x0001c17c;
+    uint32_t type_len == 0x0001c1f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -769,7 +769,7 @@ struct of_nxm_tun_metadata57 : of_oxm {
 };
 
 struct of_nxm_tun_metadata57_masked : of_oxm {
-    uint32_t type_len == 0x0001c37c;
+    uint32_t type_len == 0x0001c3f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -780,7 +780,7 @@ struct of_nxm_tun_metadata58 : of_oxm {
 };
 
 struct of_nxm_tun_metadata58_masked : of_oxm {
-    uint32_t type_len == 0x0001c57c;
+    uint32_t type_len == 0x0001c5f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -791,7 +791,7 @@ struct of_nxm_tun_metadata59 : of_oxm {
 };
 
 struct of_nxm_tun_metadata59_masked : of_oxm {
-    uint32_t type_len == 0x0001c77c;
+    uint32_t type_len == 0x0001c7f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -802,7 +802,7 @@ struct of_nxm_tun_metadata60 : of_oxm {
 };
 
 struct of_nxm_tun_metadata60_masked : of_oxm {
-    uint32_t type_len == 0x0001c97c;
+    uint32_t type_len == 0x0001c9f8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -813,7 +813,7 @@ struct of_nxm_tun_metadata61 : of_oxm {
 };
 
 struct of_nxm_tun_metadata61_masked : of_oxm {
-    uint32_t type_len == 0x0001cb7c;
+    uint32_t type_len == 0x0001cbf8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -824,7 +824,7 @@ struct of_nxm_tun_metadata62 : of_oxm {
 };
 
 struct of_nxm_tun_metadata62_masked : of_oxm {
-    uint32_t type_len == 0x0001cd7c;
+    uint32_t type_len == 0x0001cdf8;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -835,14 +835,14 @@ struct of_nxm_tun_metadata63 : of_oxm {
 };
 
 struct of_nxm_tun_metadata63_masked : of_oxm {
-    uint32_t type_len == 0x0001cf7c;
+    uint32_t type_len == 0x0001cff8;
     of_octets_t value;
     of_octets_t value_mask;
 };
 
 struct of_nxm_in_port : of_oxm {
     uint32_t type_len == 0x00000002;
-    of_octets_t value;
+    of_port_no_t value;
 };
 
 struct of_nxm_pkt_mark : of_oxm {
@@ -851,7 +851,7 @@ struct of_nxm_pkt_mark : of_oxm {
 };
 
 struct of_nxm_pkt_mark_masked : of_oxm {
-    uint32_t type_len == 0x00014304;
+    uint32_t type_len == 0x00014308;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -862,7 +862,7 @@ struct of_nxm_ct_state : of_oxm {
 };
 
 struct of_nxm_ct_state_masked : of_oxm {
-    uint32_t type_len == 0x0001d304;
+    uint32_t type_len == 0x0001d308;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -878,7 +878,7 @@ struct of_nxm_ct_mark : of_oxm {
 };
 
 struct of_nxm_ct_mark_masked : of_oxm {
-    uint32_t type_len == 0x0001d704;
+    uint32_t type_len == 0x0001d708;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -889,7 +889,7 @@ struct of_nxm_ct_label : of_oxm {
 };
 
 struct of_nxm_ct_label_masked : of_oxm {
-    uint32_t type_len == 0x0001d910;
+    uint32_t type_len == 0x0001d920;
     uint128_t value;
     uint128_t value_mask;
 };
@@ -905,7 +905,7 @@ struct of_nxm_ct_nw_src : of_oxm {
 };
 
 struct of_nxm_ct_nw_src_masked : of_oxm {
-    uint32_t type_len == 0x0001f104;
+    uint32_t type_len == 0x0001f108;
     of_ipv4_t value;
     of_ipv4_t value_mask;
 };
@@ -916,7 +916,7 @@ struct of_nxm_ct_nw_dst : of_oxm {
 };
 
 struct of_nxm_ct_nw_dst_masked : of_oxm {
-    uint32_t type_len == 0x0001f304;
+    uint32_t type_len == 0x0001f308;
     of_ipv4_t value;
     of_ipv4_t value_mask;
 };
@@ -927,7 +927,7 @@ struct of_nxm_ct_ipv6_src : of_oxm {
 };
 
 struct of_nxm_ct_ipv6_src_masked : of_oxm {
-    uint32_t type_len == 0x0001f510;
+    uint32_t type_len == 0x0001f520;
     of_ipv6_t value;
     of_ipv6_t value_mask;
 };
@@ -938,7 +938,7 @@ struct of_nxm_ct_ipv6_dst : of_oxm {
 };
 
 struct of_nxm_ct_ipv6_dst_masked : of_oxm {
-    uint32_t type_len == 0x0001f710;
+    uint32_t type_len == 0x0001f720;
     of_ipv6_t value;
     of_ipv6_t value_mask;
 };
@@ -949,7 +949,7 @@ struct of_nxm_ct_tp_src : of_oxm {
 };
 
 struct of_nxm_ct_tp_src_masked : of_oxm {
-    uint32_t type_len == 0x0001f902;
+    uint32_t type_len == 0x0001f904;
     uint16_t value;
     uint16_t value_mask;
 };
@@ -960,7 +960,7 @@ struct of_nxm_ct_tp_dst : of_oxm {
 };
 
 struct of_nxm_ct_tp_dst_masked : of_oxm {
-    uint32_t type_len == 0x0001fb02;
+    uint32_t type_len == 0x0001fb04;
     uint16_t value;
     uint16_t value_mask;
 };
@@ -971,7 +971,7 @@ struct of_nxm_reg0 : of_oxm {
 };
 
 struct of_nxm_reg0_masked : of_oxm {
-    uint32_t type_len == 0x00010104;
+    uint32_t type_len == 0x00010108;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -982,7 +982,7 @@ struct of_nxm_reg1 : of_oxm {
 };
 
 struct of_nxm_reg1_masked : of_oxm {
-    uint32_t type_len == 0x00010304;
+    uint32_t type_len == 0x00010308;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -993,7 +993,7 @@ struct of_nxm_reg2 : of_oxm {
 };
 
 struct of_nxm_reg2_masked : of_oxm {
-    uint32_t type_len == 0x00010504;
+    uint32_t type_len == 0x00010508;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1004,7 +1004,7 @@ struct of_nxm_reg3 : of_oxm {
 };
 
 struct of_nxm_reg3_masked : of_oxm {
-    uint32_t type_len == 0x00010704;
+    uint32_t type_len == 0x00010708;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1015,7 +1015,7 @@ struct of_nxm_reg4 : of_oxm {
 };
 
 struct of_nxm_reg4_masked : of_oxm {
-    uint32_t type_len == 0x00010904;
+    uint32_t type_len == 0x00010908;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1026,7 +1026,7 @@ struct of_nxm_reg5 : of_oxm {
 };
 
 struct of_nxm_reg5_masked : of_oxm {
-    uint32_t type_len == 0x00010b04;
+    uint32_t type_len == 0x00010b08;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1037,7 +1037,7 @@ struct of_nxm_reg6 : of_oxm {
 };
 
 struct of_nxm_reg6_masked : of_oxm {
-    uint32_t type_len == 0x00010d04;
+    uint32_t type_len == 0x00010d08;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1048,7 +1048,7 @@ struct of_nxm_reg7 : of_oxm {
 };
 
 struct of_nxm_reg7_masked : of_oxm {
-    uint32_t type_len == 0x00010f04;
+    uint32_t type_len == 0x00010f08;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1059,7 +1059,7 @@ struct of_nxm_reg8 : of_oxm {
 };
 
 struct of_nxm_reg8_masked : of_oxm {
-    uint32_t type_len == 0x00011104;
+    uint32_t type_len == 0x00011108;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1070,7 +1070,7 @@ struct of_nxm_reg9 : of_oxm {
 };
 
 struct of_nxm_reg9_masked : of_oxm {
-    uint32_t type_len == 0x00011304;
+    uint32_t type_len == 0x00011308;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1081,7 +1081,7 @@ struct of_nxm_reg10 : of_oxm {
 };
 
 struct of_nxm_reg10_masked : of_oxm {
-    uint32_t type_len == 0x00011504;
+    uint32_t type_len == 0x00011508;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1092,7 +1092,7 @@ struct of_nxm_reg11 : of_oxm {
 };
 
 struct of_nxm_reg11_masked : of_oxm {
-    uint32_t type_len == 0x00011704;
+    uint32_t type_len == 0x00011708;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1103,7 +1103,7 @@ struct of_nxm_reg12 : of_oxm {
 };
 
 struct of_nxm_reg12_masked : of_oxm {
-    uint32_t type_len == 0x00011904;
+    uint32_t type_len == 0x00011908;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1114,7 +1114,7 @@ struct of_nxm_reg13 : of_oxm {
 };
 
 struct of_nxm_reg13_masked : of_oxm {
-    uint32_t type_len == 0x00011b04;
+    uint32_t type_len == 0x00011b08;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1125,7 +1125,7 @@ struct of_nxm_reg14 : of_oxm {
 };
 
 struct of_nxm_reg14_masked : of_oxm {
-    uint32_t type_len == 0x00011d04;
+    uint32_t type_len == 0x00011d08;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1136,7 +1136,7 @@ struct of_nxm_reg15 : of_oxm {
 };
 
 struct of_nxm_reg15_masked : of_oxm {
-    uint32_t type_len == 0x00011f04;
+    uint32_t type_len == 0x00011f08;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1147,7 +1147,7 @@ struct of_nxm_xxreg0 : of_oxm {
 };
 
 struct of_nxm_xxreg0_masked : of_oxm {
-    uint32_t type_len == 0x0001df10;
+    uint32_t type_len == 0x0001df20;
     uint128_t value;
     uint128_t value_mask;
 };
@@ -1158,7 +1158,7 @@ struct of_nxm_xxreg1 : of_oxm {
 };
 
 struct of_nxm_xxreg1_masked : of_oxm {
-    uint32_t type_len == 0x0001e110;
+    uint32_t type_len == 0x0001e120;
     uint128_t value;
     uint128_t value_mask;
 };
@@ -1169,7 +1169,7 @@ struct of_nxm_xxreg2 : of_oxm {
 };
 
 struct of_nxm_xxreg2_masked : of_oxm {
-    uint32_t type_len == 0x0001e310;
+    uint32_t type_len == 0x0001e320;
     uint128_t value;
     uint128_t value_mask;
 };
@@ -1180,7 +1180,7 @@ struct of_nxm_xxreg3 : of_oxm {
 };
 
 struct of_nxm_xxreg3_masked : of_oxm {
-    uint32_t type_len == 0x0001e510;
+    uint32_t type_len == 0x0001e520;
     uint128_t value;
     uint128_t value_mask;
 };
@@ -1202,7 +1202,7 @@ struct of_nxm_eth_dst : of_oxm {
 };
 
 struct of_nxm_eth_dst_masked : of_oxm {
-    uint32_t type_len == 0x00000306;
+    uint32_t type_len == 0x0000030b;
     of_mac_addr_t value;
     of_mac_addr_t value_mask;
 };
@@ -1218,7 +1218,7 @@ struct of_nxm_vlan_tci : of_oxm {
 };
 
 struct of_nxm_vlan_tci_masked : of_oxm {
-    uint32_t type_len == 0x00000902;
+    uint32_t type_len == 0x00000904;
     uint16_t value;
     uint16_t value_mask;
 };
@@ -1234,7 +1234,7 @@ struct of_nxm_ip_src : of_oxm {
 };
 
 struct of_nxm_ip_src_masked : of_oxm {
-    uint32_t type_len == 0x00000f04;
+    uint32_t type_len == 0x00000f08;
     of_ipv4_t value;
     of_ipv4_t value_mask;
 };
@@ -1245,7 +1245,7 @@ struct of_nxm_ip_dst : of_oxm {
 };
 
 struct of_nxm_ip_dst_masked : of_oxm {
-    uint32_t type_len == 0x00001104;
+    uint32_t type_len == 0x00001108;
     of_ipv4_t value;
     of_ipv4_t value_mask;
 };
@@ -1256,7 +1256,7 @@ struct of_nxm_ipv6_src : of_oxm {
 };
 
 struct of_nxm_ipv6_src_masked : of_oxm {
-    uint32_t type_len == 0x00012710;
+    uint32_t type_len == 0x00012720;
     of_ipv6_t value;
     of_ipv6_t value_mask;
 };
@@ -1267,7 +1267,7 @@ struct of_nxm_ipv6_dst : of_oxm {
 };
 
 struct of_nxm_ipv6_dst_masked : of_oxm {
-    uint32_t type_len == 0x00012910;
+    uint32_t type_len == 0x00012920;
     of_ipv6_t value;
     of_ipv6_t value_mask;
 };
@@ -1278,7 +1278,7 @@ struct of_nxm_ipv6_label : of_oxm {
 };
 
 struct of_nxm_ipv6_label_masked : of_oxm {
-    uint32_t type_len == 0x00013704;
+    uint32_t type_len == 0x00013708;
     uint32_t value;
     uint32_t value_mask;
 };
@@ -1309,7 +1309,7 @@ struct of_nxm_ip_frag : of_oxm {
 };
 
 struct of_nxm_ip_frag_masked : of_oxm {
-    uint32_t type_len == 0x00013501;
+    uint32_t type_len == 0x00013502;
     of_octets_t value;
     of_octets_t value_mask;
 };
@@ -1336,7 +1336,7 @@ struct of_nxm_arp_tpa : of_oxm {
 };
 
 struct of_nxm_arp_tpa_masked : of_oxm {
-    uint32_t type_len == 0x00002304;
+    uint32_t type_len == 0x00002308;
     of_ipv4_t value;
     of_ipv4_t value_mask;
 };
@@ -1347,7 +1347,7 @@ struct of_nxm_arp_sha : of_oxm {
 };
 
 struct of_nxm_arp_sha_masked : of_oxm {
-    uint32_t type_len == 0x00012306;
+    uint32_t type_len == 0x0001230b;
     of_mac_addr_t value;
     of_mac_addr_t value_mask;
 };
@@ -1358,7 +1358,7 @@ struct of_nxm_arp_tha : of_oxm {
 };
 
 struct of_nxm_arp_tha_masked : of_oxm {
-    uint32_t type_len == 0x00012506;
+    uint32_t type_len == 0x0001250b;
     of_mac_addr_t value;
     of_mac_addr_t value_mask;
 };
@@ -1369,7 +1369,7 @@ struct of_nxm_tcp_src : of_oxm {
 };
 
 struct of_nxm_tcp_src_masked : of_oxm {
-    uint32_t type_len == 0x00001302;
+    uint32_t type_len == 0x00001304;
     uint16_t value;
     uint16_t value_mask;
 };
@@ -1391,7 +1391,7 @@ struct of_nxm_tcp_flags : of_oxm {
 };
 
 struct of_nxm_tcp_flags_masked : of_oxm {
-    uint32_t type_len == 0x00014502;
+    uint32_t type_len == 0x00014504;
     enum ofp_tcp_flags value;
     uint16_t value_mask;
 };
@@ -1402,7 +1402,7 @@ struct of_nxm_udp_src : of_oxm {
 };
 
 struct of_nxm_udp_src_masked : of_oxm {
-    uint32_t type_len == 0x00001702;
+    uint32_t type_len == 0x00001704;
     uint16_t value;
     uint16_t value_mask;
 };
@@ -1413,7 +1413,7 @@ struct of_nxm_udp_dst : of_oxm {
 };
 
 struct of_nxm_udp_dst_masked : of_oxm {
-    uint32_t type_len == 0x00001902;
+    uint32_t type_len == 0x00001904;
     uint16_t value;
     uint16_t value_mask;
 };
@@ -1444,7 +1444,7 @@ struct of_nxm_nd_target : of_oxm {
 };
 
 struct of_nxm_nd_target_masked : of_oxm {
-    uint32_t type_len == 0x00012f10;
+    uint32_t type_len == 0x00012f20;
     of_ipv6_t value;
     of_ipv6_t value_mask;
 };
@@ -1455,7 +1455,7 @@ struct of_nxm_nd_sll : of_oxm {
 };
 
 struct of_nxm_nd_sll_masked : of_oxm {
-    uint32_t type_len == 0x00013106;
+    uint32_t type_len == 0x0001310b;
     of_mac_addr_t value;
     of_mac_addr_t value_mask;
 };
@@ -1466,7 +1466,7 @@ struct of_nxm_nd_tll : of_oxm {
 };
 
 struct of_nxm_nd_tll_masked : of_oxm {
-    uint32_t type_len == 0x00013306;
+    uint32_t type_len == 0x0001330b;
     of_mac_addr_t value;
     of_mac_addr_t value_mask;
 };
