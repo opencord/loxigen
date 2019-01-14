@@ -43,6 +43,13 @@ type Deserializable interface {
 	Decode(decoder *Decoder) error
 }
 
+type Header struct {
+	Version uint8
+	Type    uint8
+	Length  uint16
+	Xid     uint32
+}
+
 type Message interface {
 	Serializable
 	GetVersion() uint8
@@ -82,4 +89,27 @@ type IAction interface {
 	GetLen() uint16
 	GetActionName() string
 	GetActionFields() map[string]interface{}
+}
+
+func (self *Header) Decode(decoder *Decoder) (err error) {
+	if decoder.Length() < 8 {
+			return fmt.Errorf("Header packet too short: %d < 4", decoder.Length())
+	}
+
+	defer func() {
+		if r := recover(); r != nil {
+			var ok bool
+			err, ok = r.(error)
+			if !ok {
+				err = fmt.Errorf("Error while parsing OpenFlow packet: %+v", r)
+			}
+		}
+	}()
+
+	self.Version = decoder.ReadByte()
+	self.Type = decoder.ReadByte()
+	self.Length = decoder.ReadUint16()
+	self.Xid = decoder.ReadUint32()
+
+	return nil
 }
