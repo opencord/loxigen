@@ -35,6 +35,14 @@ ${version.constant} = ${version.wire_version}
 :: #endfor
 )
 
+const (
+	OFPTHello = 0
+	OFPTError = 1
+	OFPTEchoRequest = 2
+	OFPTEchoReply = 3
+	OFPTExperimenter = 4
+)
+
 type Serializable interface {
 	Serialize(encoder *Encoder) error
 }
