@@ -87,12 +87,9 @@ func (self *${ofclass.goname}) Set${member.goname}(v ${member.gotype}) {
 ::
 :: base_length = ofclass.embedded_length
 :: base_offset = 0
-:: for member in ofclass.unherited_members:
-::     if type(member) != OFPadMember:
-::         base_offset = member.offset
-::         break
-::     #endif
-:: #endfor
+:: if len(ofclass.unherited_members):
+::     base_offset = ofclass.unherited_members[0].offset
+:: #endif
 ::
 :: if ofclass.superclass:
 ::     base_length -= (base_offset if len(ofclass.unherited_members) else ofclass.superclass.embedded_length)
