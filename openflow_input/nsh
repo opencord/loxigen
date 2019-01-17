@@ -77,12 +77,12 @@ struct of_ed_prop_nsh_tlv : of_ed_prop_nsh {
 };
 
 enum ofp_cs_states(wire_type=uint32_t, bitmask=True, complete=True) {
-    OFP_CS_NEW = 0,
-    OFP_CS_ESTABLISHED = 1,
-    OFP_CS_RELATED = 2,
-    OFP_CS_REPLY_DIR = 4,
-    OFP_CS_INVALID = 8,
-    OFP_CS_TRACKED = 16,
-    OFP_CS_SRC_NAT = 32,
-    OFP_CS_DST_NAT = 64,
+    OFP_CS_NEW = 1,
+    OFP_CS_ESTABLISHED = 2,
+    OFP_CS_RELATED = 4,
+    OFP_CS_REPLY_DIR = 8,
+    OFP_CS_INVALID = 16,
+    OFP_CS_TRACKED = 32,
+    OFP_CS_SRC_NAT = 64,
+    OFP_CS_DST_NAT = 128,
 };

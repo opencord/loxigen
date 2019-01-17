@@ -42,7 +42,7 @@ struct of_oxm_conn_tracking_state : of_oxm {
 struct of_oxm_conn_tracking_state_masked : of_oxm {
 	uint32_t type_len == 0x0001d308;
 	enum ofp_cs_states value;
-	uint32_t value_mask;
+	enum ofp_cs_states value_mask;
 };
 
 
