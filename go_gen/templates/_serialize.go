@@ -44,6 +44,11 @@ self.Type = ${type_member.value}
 ::     #endfor
 :: #endif
 ::
+:: length_member = ofclass.length_member
+:: if (length_member or ofclass.align) and not ofclass.virtual:
+    startIndex := len(encoder.Bytes())
+:: #endif
+::
 :: if ofclass.superclass:
 	if err := self.${util.go_ident(ofclass.superclass.name)}.Serialize(encoder); err != nil {
 		return err
@@ -74,20 +79,28 @@ self.Type = ${type_member.value}
 ::     #endif
 :: #endfor
 ::
-:: if ofclass.has_external_alignment:
-
-	encoder.SkipAlign()
-
-:: #endif
+:: if not ofclass.virtual:
+::     if length_member or ofclass.align:
+   length := len(encoder.Bytes()) - startIndex
+::     #endif
+::     if ofclass.align:
+   alignedLength := ((length + ${ofclass.align-1})/${ofclass.align} * ${ofclass.align})
+::     #endif
 ::
 :: # Overwrite length with its real value
-:: length_member = ofclass.length_member
-:: if length_member and not ofclass.virtual:
 
-::     if length_member.oftype == "uint8_t":
-encoder.Bytes()[${length_member.offset}] = uint8(len(encoder.Bytes()))
-::     else:
-	binary.BigEndian.Put${length_member.oftype[:-2].title()}(encoder.Bytes()[${length_member.offset}:${length_member.offset+2}], uint16(len(encoder.Bytes())))
+::     if length_member:
+
+::         if length_member.oftype == "uint8_t":
+encoder.Bytes()[startIndex+${length_member.offset}] = uint8(${"alignedLength" if ofclass.length_includes_align else "length"})
+::         else:
+	binary.BigEndian.Put${length_member.oftype[:-2].title()}(encoder.Bytes()[startIndex+${length_member.offset}:startIndex+${length_member.offset+2}], uint16(${"alignedLength" if ofclass.length_includes_align else "length"}))
+::         #endif
+::     #endif
+::     if ofclass.align:
+
+    encoder.Write(bytes.Repeat([]byte{0}, alignedLength - length))
+
 ::     #endif
 :: #endif
 

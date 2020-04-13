@@ -80,6 +80,8 @@ def build_ofclasses(version):
     for ofclass in loxi_globals.ir[version].classes:
         module_name, ofclass.goname = generate_goname(ofclass)
         ofclass.field_lengths = {}
+        ofclass.align = int(ofclass.params['align']) if 'align' in ofclass.params else 0
+        ofclass.length_includes_align = ofclass.params['length_includes_align'] == 'True' if 'length_includes_align' in ofclass.params else False
         modules[module_name].append(ofclass)
         offset = 0
         for i, m in enumerate(ofclass.members):
