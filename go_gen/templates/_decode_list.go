@@ -36,7 +36,8 @@
 :: elem_type = util.go_ident(loxi_utils.oftype_list_elem(member.oftype))
 
 :: if member.name in ofclass.field_lengths:
-	for i := 0; i < int(${self_name}.${ofclass.field_lengths[member.name].goname}); i++ {
+    end := decoder.Offset() + int(${self_name}.${ofclass.field_lengths[member.name].goname})
+	for decoder.Offset() < end {
 :: else:
 	for decoder.Length() >= ${elem_length} {
 :: #endif
