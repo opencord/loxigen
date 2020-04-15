@@ -32,7 +32,7 @@ import (
 	"encoding/binary"
 
 	"github.com/google/gopacket"
-	"github.com/skydive-project/goloxi"
+	"github.com/opencord/goloxi"
 )
 
 // TODO: set real types

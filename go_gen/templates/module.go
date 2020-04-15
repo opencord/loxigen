@@ -42,7 +42,7 @@ import (
 	"net"
 
 	"github.com/google/gopacket"
-	"github.com/skydive-project/goloxi"
+	"github.com/opencord/goloxi"
 )
 
 :: for i, ofclass in enumerate(ofclasses):
