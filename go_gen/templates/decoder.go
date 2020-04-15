@@ -27,6 +27,8 @@
 :: # under the EPL.
 ::
 
+:: include('_copyright.go')
+
 package goloxi
 
 import (

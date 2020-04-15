@@ -25,6 +25,7 @@
 :: # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 :: # EPL for the specific language governing permissions and limitations
 :: # under the EPL.
+:: include('_copyright.go')
 
 package ${package}
 
