@@ -82,3 +82,13 @@ make check-all
 ```
 
 and correct any problems before submitting a pull request.
+
+Note
+====
+
+This fork of loxigen includes an experimental golang backend.
+The golang backend was originally developed [here](https://github.com/lebauce/loxigen/tree/golang).
+The purpose of this fork is to bring the golang backend up to date with the latest loxigen master 
+to develop on top of that.
+The generated go libraries are hosted [here](https://github.com/opencord/goloxi).
+
